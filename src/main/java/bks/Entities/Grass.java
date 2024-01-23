@@ -1,6 +1,9 @@
 package bks.Entities;
 
+import bks.Main.Coordinates;
+
 public final class Grass extends Entity{
-    //еда для травоядных
-    //координаты
+    public Grass(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
 }

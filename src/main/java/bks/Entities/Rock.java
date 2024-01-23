@@ -1,6 +1,9 @@
 package bks.Entities;
 
+import bks.Main.Coordinates;
+
 public final class Rock extends Entity{
-    //статический объект
-    //координаты
+    public Rock(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
 }
