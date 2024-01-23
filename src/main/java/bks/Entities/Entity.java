@@ -1,5 +1,15 @@
 package bks.Entities;
 
+import bks.Main.Coordinates;
+
 public abstract class Entity {
-    // координаты
+    Coordinates coordinates;
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
 }
