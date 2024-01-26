@@ -6,9 +6,9 @@ public final class Predator extends Creature {
     final int DAMAGE;
 
     // координаты
-    public Predator(int speed, int hp, int damage, Coordinates coordinates) {
-        super(speed, hp, coordinates);
-        this.DAMAGE = damage;
+    public Predator(Coordinates coordinates) {
+        super(2, 10, coordinates);
+        this.DAMAGE = 5;
     }
 
     @Override
