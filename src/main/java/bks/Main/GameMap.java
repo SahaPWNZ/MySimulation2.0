@@ -6,16 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameMap {
-    HashMap<Coordinates, Entity> map = new HashMap<>();
+    private HashMap<Coordinates, Entity> map = new HashMap<>();
     private final int width;
     private final int height;
+
+    public HashMap<Coordinates, Entity> getMap() {
+        return map;
+    }
 
     public GameMap(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
-    public boolean isEmpty(Coordinates coordinates) {
+    public boolean isEmptyCeil(Coordinates coordinates) {
         return !this.map.containsKey(coordinates);
     }
 
