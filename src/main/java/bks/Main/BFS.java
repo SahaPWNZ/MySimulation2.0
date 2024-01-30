@@ -2,20 +2,21 @@ package bks.Main;
 
 import bks.Entities.Entity;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class BFS {
     private HashMap<Coordinates, Entity> grid;
     private Coordinates start, end;
     private Queue<Vertex> queue;
+    private HashSet<Vertex> set;
 
     public BFS(HashMap<Coordinates, Entity> grid, Coordinates start, Coordinates end) {
         this.grid = grid;
         this.start = start;
         this.end = end;
         this.queue = new LinkedList<>();
+        this.set = new HashSet<>();
+
     }
 
     public void run(GameMap map) {
@@ -24,16 +25,23 @@ public class BFS {
 
         while (!queue.isEmpty()) {
             Vertex currentVertex = queue.poll();
-
-            if (currentVertex.coord.equals(end)) {
-                System.out.println("Конечная точка достигнута");
-                break;
-            }
-            for (Coordinates neighborCoord : currentVertex.coord.getNeighbors(map)) {
-                if (!queue.contains(new Vertex(neighborCoord))) {
-                    queue.add(new Vertex(neighborCoord, currentVertex));
+            if (set.add(currentVertex)) {
+                System.out.println(currentVertex);
+                if (currentVertex.coord.equals(end)) {
+                    System.out.println("Конечная точка достигнута");
+                    break;
+                }
+                for (Coordinates neighborCoord : currentVertex.coord.getNeighbors(map)) {
+                    if (!queue.contains(new Vertex(neighborCoord))) {
+                        queue.add(new Vertex(neighborCoord));
+                    }
                 }
             }
+//            for (Coordinates neighborCoord : currentVertex.coord.getNeighbors(map)) {
+//                if (!queue.contains(new Vertex(neighborCoord)) {
+//                    queue.add(new Vertex(neighborCoord, currentVertex));
+//                }
+//            }
         }
 
         if (!queue.isEmpty()) {
@@ -45,27 +53,37 @@ public class BFS {
     }
 
     private void printPath(Vertex startVertex) {
-        if (startVertex == null) {
-            return;
-        }
 
-        printPath(startVertex.parent);
-        System.out.println(startVertex.coord);
+
     }
 
 
     class Vertex {
         Coordinates coord;
-        Vertex parent;
 
         public Vertex(Coordinates coord) {
             this.coord = coord;
         }
-        public Vertex(Coordinates coord, Vertex parent) {
-            this.coord = coord;
-            this.parent = parent;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Vertex vertex = (Vertex) o;
+            return Objects.equals(coord, vertex.coord);
         }
 
+        @Override
+        public int hashCode() {
+            return Objects.hash(coord);
+        }
+
+        @Override
+        public String toString() {
+            return "Vertex{" +
+                    "coord=" + coord +
+                    '}';
+        }
     }
 }
 
