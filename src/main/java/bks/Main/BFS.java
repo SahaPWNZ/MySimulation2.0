@@ -18,8 +18,8 @@ public class BFS {
         this.queue = new LinkedList<>();
     }
 
-    public void run() {
-        Vertex startVertex = new Vertex(start, grid.get(start));
+    public void run(GameMap map) {
+        Vertex startVertex = new Vertex(start);
         queue.add(startVertex);
 
         while (!queue.isEmpty()) {
@@ -29,9 +29,9 @@ public class BFS {
                 System.out.println("Конечная точка достигнута");
                 break;
             }
-            for (Coordinates neighborCoord : currentVertex.coord.getNeighbors()) {
-                if (!queue.contains(new Vertex(neighborCoord, grid.get(neighborCoord)))) {
-                    queue.add(new Vertex(neighborCoord, grid.get(neighborCoord)));
+            for (Coordinates neighborCoord : currentVertex.coord.getNeighbors(map)) {
+                if (!queue.contains(new Vertex(neighborCoord))) {
+                    queue.add(new Vertex(neighborCoord, currentVertex));
                 }
             }
         }
@@ -56,13 +56,16 @@ public class BFS {
 
     class Vertex {
         Coordinates coord;
-        Entity state;
         Vertex parent;
 
-        public Vertex(Coordinates coord, Entity state) {
+        public Vertex(Coordinates coord) {
             this.coord = coord;
-            this.state = state;
         }
+        public Vertex(Coordinates coord, Vertex parent) {
+            this.coord = coord;
+            this.parent = parent;
+        }
+
     }
 }
 

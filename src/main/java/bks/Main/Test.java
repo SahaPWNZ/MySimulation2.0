@@ -13,27 +13,33 @@ public class Test {
     public static void initTest() {
         GameMap gameMap = new GameMap(5, 10);
 
-        int valueOfCreates = 5;
+        int valueOfCreates = 1;
         while (valueOfCreates > 0) {
-            Coordinates coordinates = new Coordinates(random.nextInt(gameMap.getWidth()), random.nextInt(gameMap.getHeight()));
+//            Coordinates coordinates = new Coordinates(random.nextInt(gameMap.getHeight()), random.nextInt(gameMap.getWidth()));
+            Coordinates coordinates = new Coordinates(4,8);
+//            System.out.println(coordinates.getNeighbors(gameMap));
             if (gameMap.isEmptyCeil(coordinates)) {
                 gameMap.getMap().put(coordinates, new Herbivore(coordinates));
                 valueOfCreates--;
             }
         }
-        int valueOfGrass = 3;
-        while(valueOfGrass > 0){
-            Coordinates coordinates = new Coordinates(random.nextInt(gameMap.getWidth()), random.nextInt(gameMap.getHeight()));
-            if (gameMap.isEmptyCeil(coordinates)) {
-                gameMap.getMap().put(coordinates, new Grass(coordinates));
-                valueOfGrass--;
-            }
-        }
+//        int valueOfGrass = 1;
+//        while(valueOfGrass > 0){
+////            Coordinates coordinates = new Coordinates(random.nextInt(gameMap.getHeight()), random.nextInt(gameMap.getWidth()));
+//            Coordinates coordinates = new Coordinates(1,1);
+//            if (gameMap.isEmptyCeil(coordinates)) {
+//                gameMap.getMap().put(coordinates, new Grass(coordinates));
+//                valueOfGrass--;
+//            }
+//        }
 
         for (Map.Entry<Coordinates, Entity> entry : gameMap.getMap().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
         Render.mapRender(gameMap);
+        BFS bfs = new BFS(gameMap.getMap(), new Coordinates(4,8), new Coordinates(0,0));
+        bfs.run(gameMap);
+
 
     }
 }

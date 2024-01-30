@@ -14,7 +14,7 @@ public class GameMap {
         return map;
     }
 
-    public GameMap(int width, int height) {
+    public GameMap(int height, int width) {
         this.width = width;
         this.height = height;
     }
