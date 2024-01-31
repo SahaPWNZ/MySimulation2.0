@@ -34,13 +34,32 @@ public class Coordinates {
 
     public ArrayList<Coordinates> getNeighbors(GameMap map) {
         ArrayList<Coordinates> listOfNeighbors = new ArrayList<>();
-        for (int i = this.row - 1; i <= this.row + 1; i++) {
-            for (int j = this.col - 1; j <= this.col + 1; j++) {
-                if (!(i == this.row && j == this.col) && (i <map.getHeight() && i> 0) && (j < map.getWidth() && j > 0)) {
-                    if (map.isEmptyCeil(new Coordinates(i, j))) {
-                        listOfNeighbors.add(new Coordinates(i, j));
-                    }
-                }
+        int i = this.row - 1;
+        int j = this.col;
+        if (i < map.getHeight() && i >= 0 && j < map.getWidth() && j >= 0) {
+            if (map.isEmptyCeil(new Coordinates(i, j))) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        i = this.row + 1;
+        j = this.col;
+        if (i < map.getHeight() && i >= 0 && j < map.getWidth() && j >= 0) {
+            if (map.isEmptyCeil(new Coordinates(i, j))) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        i = this.row;
+        j = this.col + 1;
+        if (i < map.getHeight() && i >= 0 && j < map.getWidth() && j >= 0) {
+            if (map.isEmptyCeil(new Coordinates(i, j))) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        i = this.row;
+        j = this.col - 1;
+        if (i < map.getHeight() && i >= 0 && j < map.getWidth() && j >= 0) {
+            if (map.isEmptyCeil(new Coordinates(i, j))) {
+                listOfNeighbors.add(new Coordinates(i, j));
             }
         }
         return listOfNeighbors;

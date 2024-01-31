@@ -23,15 +23,15 @@ public class Test {
                 valueOfCreates--;
             }
         }
-//        int valueOfGrass = 1;
-//        while(valueOfGrass > 0){
+        int valueOfGrass = 1;
+        while(valueOfGrass > 0){
 ////            Coordinates coordinates = new Coordinates(random.nextInt(gameMap.getHeight()), random.nextInt(gameMap.getWidth()));
-//            Coordinates coordinates = new Coordinates(1,1);
-//            if (gameMap.isEmptyCeil(coordinates)) {
-//                gameMap.getMap().put(coordinates, new Grass(coordinates));
-//                valueOfGrass--;
-//            }
-//        }
+            Coordinates coordinates = new Coordinates(2,1);
+            if (gameMap.isEmptyCeil(coordinates)) {
+                gameMap.getMap().put(coordinates, new Grass(coordinates));
+                valueOfGrass--;
+            }
+        }
 
         for (Map.Entry<Coordinates, Entity> entry : gameMap.getMap().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());

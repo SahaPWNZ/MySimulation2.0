@@ -9,6 +9,7 @@ public class BFS {
     private Coordinates start, end;
     private Queue<Vertex> queue;
     private HashSet<Vertex> set;
+    private HashMap<Coordinates, Coordinates> allPath;
 
     public BFS(HashMap<Coordinates, Entity> grid, Coordinates start, Coordinates end) {
         this.grid = grid;
@@ -16,43 +17,36 @@ public class BFS {
         this.end = end;
         this.queue = new LinkedList<>();
         this.set = new HashSet<>();
-
+        this.allPath = new HashMap<>();
     }
 
     public void run(GameMap map) {
         Vertex startVertex = new Vertex(start);
         queue.add(startVertex);
-
+        allPath.put(startVertex.coord, null);
         while (!queue.isEmpty()) {
             Vertex currentVertex = queue.poll();
             if (set.add(currentVertex)) {
-                System.out.println(currentVertex);
                 if (currentVertex.coord.equals(end)) {
                     System.out.println("Конечная точка достигнута");
                     break;
                 }
                 for (Coordinates neighborCoord : currentVertex.coord.getNeighbors(map)) {
-                    if (!queue.contains(new Vertex(neighborCoord))) {
+                    if (!queue.contains(new Vertex(neighborCoord)) && !(allPath.containsKey(neighborCoord))) {
                         queue.add(new Vertex(neighborCoord));
+                        allPath.put(neighborCoord, currentVertex.coord);
                     }
                 }
             }
-//            for (Coordinates neighborCoord : currentVertex.coord.getNeighbors(map)) {
-//                if (!queue.contains(new Vertex(neighborCoord)) {
-//                    queue.add(new Vertex(neighborCoord, currentVertex));
-//                }
-//            }
         }
-
-        if (!queue.isEmpty()) {
-            System.out.println("Нет пути");
-        } else {
-            System.out.println("Путь найден");
-            printPath(startVertex);
+        System.out.println("Путь найден");
+        List<Coordinates> path = new LinkedList<>();
+        Coordinates temp = this.end;
+        while (temp != null) {
+            path.addFirst(temp);
+            temp = allPath.get(temp);
         }
-    }
-
-    private void printPath(Vertex startVertex) {
+        System.out.println(path);
 
 
     }
