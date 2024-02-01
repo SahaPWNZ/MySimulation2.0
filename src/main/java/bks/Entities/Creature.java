@@ -6,6 +6,8 @@ public abstract class Creature extends Entity {
     private final int SPEED;
     private int HP;
 
+
+
     Creature(int speed, int hp, Coordinates coordinates) {
         this.SPEED = speed;
         this.HP = hp;

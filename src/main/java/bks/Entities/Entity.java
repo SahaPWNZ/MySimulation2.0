@@ -5,6 +5,7 @@ import bks.Main.Coordinates;
 public abstract class Entity {
     Coordinates coordinates;
 
+
     public Coordinates getCoordinates() {
         return coordinates;
     }

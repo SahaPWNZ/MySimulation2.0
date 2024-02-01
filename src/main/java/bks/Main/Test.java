@@ -37,7 +37,7 @@ public class Test {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
         Render.mapRender(gameMap);
-        BFS bfs = new BFS(gameMap.getMap(), new Coordinates(1,1), new Coordinates(3,2));
+        BFS bfs = new BFS(gameMap.getMap(), new Coordinates(1,1), new Coordinates(3,3));
         bfs.run(gameMap);
 
 
