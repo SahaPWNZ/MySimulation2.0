@@ -1,6 +1,7 @@
 package bks.Entities;
 
 import bks.Main.Coordinates;
+import bks.Main.Simulation;
 
 public final class Predator extends Creature {
     final int DAMAGE;
@@ -15,6 +16,12 @@ public final class Predator extends Creature {
     void makeMove() {
 
     }
+
+    @Override
+    public boolean findEaten(Simulation simulation) {
+        return false;
+    }
+
 
     void atack() {
 

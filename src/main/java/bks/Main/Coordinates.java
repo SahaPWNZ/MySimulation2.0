@@ -35,6 +35,14 @@ public class Coordinates {
                 '}';
     }
 
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
     public ArrayList<Coordinates> getNeighbors(Simulation simulation) {
         ArrayList<Coordinates> listOfNeighbors = new ArrayList<>();
         int i = this.row - 1;

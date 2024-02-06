@@ -1,6 +1,7 @@
 package bks.Entities;
 
 import bks.Main.Coordinates;
+import bks.Main.Simulation;
 
 public final class Herbivore extends Creature {
     public Herbivore(Coordinates coordinates) {
@@ -16,6 +17,39 @@ public final class Herbivore extends Creature {
             //когда ячейка==цель, то возвращаем путь
             //двигаемся цели на одну клетку
                 //проверка на еду в соседних клетках
+    }
+
+    @Override
+    public boolean findEaten(Simulation simulation) {
+        int i = coordinates.getRow() -1;
+        int j = coordinates.getCol();
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        i = coordinates.getRow() + 1;
+        j = coordinates.getCol();
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        i = coordinates.getRow();
+        j = coordinates.getCol() + 1;
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        i = coordinates.getRow();
+        j = coordinates.getCol() - 1;
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        return false;
     }
 
     @Override

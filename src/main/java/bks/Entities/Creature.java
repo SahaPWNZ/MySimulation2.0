@@ -1,6 +1,7 @@
 package bks.Entities;
 
 import bks.Main.Coordinates;
+import bks.Main.Simulation;
 
 public abstract class Creature extends Entity {
     private final int SPEED;
@@ -27,4 +28,7 @@ public abstract class Creature extends Entity {
     }
 
     abstract void makeMove();
+
+
+    public abstract boolean findEaten(Simulation simulation);
 }
