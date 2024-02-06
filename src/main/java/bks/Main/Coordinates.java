@@ -1,6 +1,9 @@
 package bks.Main;
 
+import bks.Entities.Entity;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Coordinates {
@@ -32,33 +35,33 @@ public class Coordinates {
                 '}';
     }
 
-    public ArrayList<Coordinates> getNeighbors(GameMap map) {
+    public ArrayList<Coordinates> getNeighbors(Simulation simulation) {
         ArrayList<Coordinates> listOfNeighbors = new ArrayList<>();
         int i = this.row - 1;
         int j = this.col;
-        if (i < map.getHeight() && i >= 0 && j < map.getWidth() && j >= 0) {
-            if (map.isEmptyCeil(new Coordinates(i, j))) {
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
                 listOfNeighbors.add(new Coordinates(i, j));
             }
         }
         i = this.row + 1;
         j = this.col;
-        if (i < map.getHeight() && i >= 0 && j < map.getWidth() && j >= 0) {
-            if (map.isEmptyCeil(new Coordinates(i, j))) {
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
                 listOfNeighbors.add(new Coordinates(i, j));
             }
         }
         i = this.row;
         j = this.col + 1;
-        if (i < map.getHeight() && i >= 0 && j < map.getWidth() && j >= 0) {
-            if (map.isEmptyCeil(new Coordinates(i, j))) {
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
                 listOfNeighbors.add(new Coordinates(i, j));
             }
         }
         i = this.row;
         j = this.col - 1;
-        if (i < map.getHeight() && i >= 0 && j < map.getWidth() && j >= 0) {
-            if (map.isEmptyCeil(new Coordinates(i, j))) {
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
                 listOfNeighbors.add(new Coordinates(i, j));
             }
         }

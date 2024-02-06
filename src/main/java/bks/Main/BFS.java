@@ -20,7 +20,7 @@ public class BFS {
         this.allPath = new HashMap<>();
     }
 
-    public void run(GameMap map) {
+    public void run(Simulation simulation) {
         queue.add(start);
         allPath.put(start, null);
         while (!queue.isEmpty()) {
@@ -37,7 +37,7 @@ public class BFS {
                     System.out.println(path);
                     break;
                 }
-                for (Coordinates neighborCoord : currentCoordinates.getNeighbors(map)) {
+                for (Coordinates neighborCoord : currentCoordinates.getNeighbors(simulation)) {
                     if (!queue.contains(neighborCoord) && !(allPath.containsKey(neighborCoord))) {
                         queue.add(neighborCoord);
                         allPath.put(neighborCoord, currentCoordinates);
@@ -45,7 +45,7 @@ public class BFS {
                 }
             }
         }
-        System.out.println("пути нет");
+
 
     }
 }

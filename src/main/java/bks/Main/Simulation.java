@@ -21,7 +21,10 @@ public class Simulation {
     }
 
     public boolean isEmptyCeil(Coordinates coordinates) {
-        return !this.map.containsKey(coordinates);
+        return this.map.get(coordinates) == null ;
+    }
+    public void makeEmptyCeil(Coordinates coordinates){
+        this.map.put(coordinates, null);
     }
 
     public int getWIDTH() {
@@ -31,6 +34,8 @@ public class Simulation {
     public int getHEIGHT() {
         return HEIGHT;
     }
+
+
 
     public void mapRender() {
         for (int i = 0; i < this.getHEIGHT(); i++) {
