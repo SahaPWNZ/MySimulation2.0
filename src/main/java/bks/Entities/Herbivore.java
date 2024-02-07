@@ -20,12 +20,12 @@ public final class Herbivore extends Creature {
     }
 
     @Override
-    public boolean findEaten(Simulation simulation) {
+    public boolean findEat(Simulation simulation) {
         int i = coordinates.getRow() -1;
         int j = coordinates.getCol();
         if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
-                listOfNeighbors.add(new Coordinates(i, j));
+            if (simulation.getMap().get(new Coordinates(i, j)) instanceof Grass) {
+                return true;
             }
         }
         i = coordinates.getRow() + 1;

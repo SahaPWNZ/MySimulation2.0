@@ -18,7 +18,7 @@ public final class Predator extends Creature {
     }
 
     @Override
-    public boolean findEaten(Simulation simulation) {
+    public boolean findEat(Simulation simulation) {
         return false;
     }
 

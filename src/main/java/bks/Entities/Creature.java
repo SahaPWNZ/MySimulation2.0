@@ -30,5 +30,5 @@ public abstract class Creature extends Entity {
     abstract void makeMove();
 
 
-    public abstract boolean findEaten(Simulation simulation);
+    public abstract boolean findEat(Simulation simulation);
 }
