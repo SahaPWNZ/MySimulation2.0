@@ -20,7 +20,7 @@ public class BFS {
         this.allPath = new HashMap<>();
     }
 
-    public void run(Simulation simulation) {
+    public Coordinates run(Simulation simulation) {
         queue.add(start);
         allPath.put(start, null);
         while (!queue.isEmpty()) {
@@ -34,10 +34,9 @@ public class BFS {
                         path.addFirst(temp);
                         temp = allPath.get(temp);
                     }
-                    System.out.println(path);
-                    break;
+                    return path.get(1);
                 }
-                for (Coordinates neighborCoord : currentCoordinates.getNeighbors(simulation)) {
+                for (Coordinates neighborCoord : getNeighbors2(simulation, currentCoordinates)) {
                     if (!queue.contains(neighborCoord) && !(allPath.containsKey(neighborCoord))) {
                         queue.add(neighborCoord);
                         allPath.put(neighborCoord, currentCoordinates);
@@ -45,8 +44,41 @@ public class BFS {
                 }
             }
         }
-
-
+        return null;
     }
+
+    public ArrayList<Coordinates> getNeighbors2(Simulation simulation, Coordinates currentCoordinates) {
+        ArrayList<Coordinates> listOfNeighbors = new ArrayList<>();
+        int i = currentCoordinates.getRow() - 1;
+        int j = currentCoordinates.getCol();
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j), end)) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        i = currentCoordinates.getRow() + 1;
+        j = currentCoordinates.getCol();
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j), end)) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        i = currentCoordinates.getRow();
+        j = currentCoordinates.getCol() + 1;
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j), end)) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        i = currentCoordinates.getRow();
+        j = currentCoordinates.getCol() - 1;
+        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
+            if (simulation.isEmptyCeil(new Coordinates(i, j), end)) {
+                listOfNeighbors.add(new Coordinates(i, j));
+            }
+        }
+        return listOfNeighbors;
+    }
+
 }
 

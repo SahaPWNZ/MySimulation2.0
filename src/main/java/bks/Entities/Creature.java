@@ -27,8 +27,10 @@ public abstract class Creature extends Entity {
         this.HP = HP;
     }
 
-    abstract void makeMove();
 
+
+
+    abstract void makeMove(Simulation simulation, Coordinates oldCoordinates, Coordinates newCoordinates);
 
     public abstract boolean findEat(Simulation simulation);
 }

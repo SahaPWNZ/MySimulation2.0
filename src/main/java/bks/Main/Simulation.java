@@ -26,6 +26,10 @@ public class Simulation {
     public void makeEmptyCeil(Coordinates coordinates){
         this.map.put(coordinates, null);
     }
+    public boolean isEmptyCeil(Coordinates coordinates, Coordinates target) {
+        return this.map.get(coordinates) == null || coordinates.equals(target) ;
+    }
+
 
     public int getWIDTH() {
         return WIDTH;

@@ -6,15 +6,18 @@ import bks.Main.Simulation;
 import java.util.ArrayList;
 
 public final class Herbivore extends Creature {
-//    public static ArrayList<Herbivore> entities = new ArrayList<Herbivore>();
+    public static ArrayList<Herbivore> entities = new ArrayList<Herbivore>();
+
     public Herbivore(Coordinates coordinates) {
         super(1, 10, coordinates);
-//        entities.add(this);
+        entities.add(this);
     }
 
     @Override
-    void makeMove() {
-
+    public void makeMove(Simulation simulation, Coordinates oldCoordinates, Coordinates newCoordinates) {
+        this.coordinates = newCoordinates;
+        simulation.makeEmptyCeil(oldCoordinates);
+        simulation.getMap().put(this.coordinates, this);
         //если еда - то кушаем и не ходим дальше,
         //запуск алгоритма поиска пути и сравнение с листом объектов целей
         //когда ячейка==цель, то возвращаем путь

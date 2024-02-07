@@ -13,7 +13,7 @@ public final class Predator extends Creature {
     }
 
     @Override
-    void makeMove() {
+    void makeMove(Simulation simulation, Coordinates oldCoordinates, Coordinates newCoordinates) {
 
     }
 
