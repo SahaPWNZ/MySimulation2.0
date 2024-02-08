@@ -13,7 +13,6 @@ public class Test {
     public static void initTest() {
         Simulation simulation = new Simulation(4, 4);
 
-
         int valueOfCreates = 1;
         while (valueOfCreates > 0) {
 //            Coordinates coordinates = new Coordinates(random.nextInt(gameMap.getHeight()), random.nextInt(gameMap.getWidth()));
@@ -27,7 +26,7 @@ public class Test {
         int valueOfGrass = 1;
         while(valueOfGrass > 0){
 ////            Coordinates coordinates = new Coordinates(random.nextInt(gameMap.getHeight()), random.nextInt(gameMap.getWidth()));
-            Coordinates coordinates = new Coordinates(2,1);
+            Coordinates coordinates = new Coordinates(2,2);
             if (simulation.isEmptyCeil(coordinates)) {
                 simulation.getMap().put(coordinates, new Grass(coordinates));
                 valueOfGrass--;
@@ -37,12 +36,13 @@ public class Test {
         for (Map.Entry<Coordinates, Entity> entry : simulation.getMap().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
-
         simulation.mapRender();
-        BFS bfs = new BFS(simulation.getMap(), new Coordinates(1,1), new Coordinates(1,2));
+        BFS bfs = new BFS(simulation.getMap(), new Coordinates(1,1), new Coordinates(2,2));
         bfs.run(simulation);
+//        System.out.println(Herbivore.entities.get(0).findEat(simulation));
 
-
-
+//        if (Herbivore.entities.get(0).findEat(simulation)){
+//
+//        }
     }
 }
