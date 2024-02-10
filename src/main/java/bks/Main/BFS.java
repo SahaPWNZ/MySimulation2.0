@@ -5,14 +5,12 @@ import bks.Entities.Entity;
 import java.util.*;
 
 public class BFS {
-    private HashMap<Coordinates, Entity> grid;
     private Coordinates start, end;
     private Queue<Coordinates> queue;
     private HashSet<Coordinates> set;
     private HashMap<Coordinates, Coordinates> allPath;
 
-    public BFS(HashMap<Coordinates, Entity> grid, Coordinates start, Coordinates end) {
-        this.grid = grid;
+    public BFS( Coordinates start, Coordinates end) {
         this.start = start;
         this.end = end;
         this.queue = new LinkedList<>();

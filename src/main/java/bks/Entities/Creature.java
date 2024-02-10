@@ -33,4 +33,8 @@ public abstract class Creature extends Entity {
     abstract void makeMove(Simulation simulation, Coordinates oldCoordinates, Coordinates newCoordinates);
 
     public abstract boolean findEat(Simulation simulation);
+
+    public abstract void randomMove(Simulation simulation);
+
+    public abstract void eat(Simulation simulation);
 }

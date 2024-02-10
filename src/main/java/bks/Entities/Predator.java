@@ -22,6 +22,16 @@ public final class Predator extends Creature {
         return false;
     }
 
+    @Override
+    public void randomMove(Simulation simulation) {
+
+    }
+
+    @Override
+    public void eat(Simulation simulation) {
+
+    }
+
 
     void atack() {
 
