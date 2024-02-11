@@ -5,13 +5,11 @@ import bks.Main.Simulation;
 
 public abstract class Creature extends Entity {
     private final int SPEED;
-    private int HP;
 
 
 
-    Creature(int speed, int hp, Coordinates coordinates) {
+    Creature(int speed, Coordinates coordinates) {
         this.SPEED = speed;
-        this.HP = hp;
         this.coordinates = coordinates;
     }
 
@@ -19,13 +17,8 @@ public abstract class Creature extends Entity {
         return SPEED;
     }
 
-    public int getHP() {
-        return HP;
-    }
 
-    public void setHP(int HP) {
-        this.HP = HP;
-    }
+
 
 
 

@@ -48,7 +48,7 @@ public class Simulation {
     }
 
     public void setCountTurn() {
-        this.countTurn = this.getCountTurn() +1;
+        this.countTurn = this.getCountTurn() + 1;
     }
 
     public void mapRender() {
@@ -112,8 +112,32 @@ public class Simulation {
             }
         }
     }
-    public void nextTurnPredator() {
 
+    public void nextTurnPredator(ArrayList<Predator> predators) {
+        for (Predator predator : predators) {
+            int countSpeed = 0;
+            while (countSpeed < predator.getSPEED()) {
+                if (predator.findEat(this)){
+                    predator.eat(this);
+                }
+                else {
+                    ArrayList<Entity> listOfEat = getListOfEats(Herbivore.class);
+                    if (!listOfEat.isEmpty()) {
+                        BFS bfs = new BFS(predator.getCoordinates(), getCoordinatesOfClosestEat(predator.getCoordinates(), listOfEat));
+                        Coordinates turnCoordinates = bfs.run(this);
+                        if (turnCoordinates != null) {
+                            predator.makeMove(this, predator.getCoordinates(), turnCoordinates);
+                        } else {
+                            predator.randomMove(this);
+                        }
+                    } else {
+                        predator.randomMove(this);
+                    }
+                }
+                countSpeed++;
+            }
+
+        }
     }
 
     public static void startSimulation() {
@@ -128,26 +152,21 @@ public class Simulation {
         while (true) {
             System.out.println("Нажмите любую клавишу чтобы продолжить симуляцию, или 0 чтобы закончить. Текущий ход = " + simulation.getCountTurn());
             String input = scan.nextLine();
-            if (input.equals("0")){
+            if (input.equals("0")) {
                 System.exit(0);
             }
             simulation.nextTurnHerbivore(Herbivore.entities);
-            simulation.nextTurnPredator();
-            //проверка на количество травы и травоядных, если меньше 1-ого, то добавляем
-            if (Herbivore.entities.size() <= 1){
+            simulation.nextTurnPredator(Predator.entities);
+            if (Herbivore.entities.size() <= 1) {
                 simulation.initHerbivoreEntity();
             }
-            if (simulation.getListOfEats(Grass.class).size() <=1){
+            if (simulation.getListOfEats(Grass.class).size() <= 1) {
                 simulation.initGrassEntity();
             }
             simulation.setCountTurn();
             simulation.mapRender();
 
         }
-//        String input = scan.nextLine();
-//        if (input.equals("0")) {
-//            System.exit(0);
-//        }
     }
 
     public void initStaticEntity() {
@@ -189,7 +208,14 @@ public class Simulation {
     }
 
     public void initPredatorEntity() {
-
+        int count = 2;
+        while (count > 0) {
+            Coordinates coordinates = new Coordinates(random.nextInt(this.getHEIGHT()), random.nextInt(this.getWIDTH()));
+            if (this.isEmptyCeil(coordinates)) {
+                this.getMap().put(coordinates, new Predator(coordinates));
+                count--;
+            }
+        }
     }
 
 }

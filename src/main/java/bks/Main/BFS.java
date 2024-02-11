@@ -25,7 +25,6 @@ public class BFS {
             Coordinates currentCoordinates = queue.poll();
             if (set.add(currentCoordinates)) {
                 if (currentCoordinates.equals(end)) {
-                    System.out.println("Конечная точка достигнута");
                     LinkedList<Coordinates> path = new LinkedList<>();
                     Coordinates temp = this.end;
                     while (temp != null) {

@@ -9,7 +9,7 @@ public final class Herbivore extends Creature {
     public static ArrayList<Herbivore> entities = new ArrayList<>();
 
     public Herbivore(Coordinates coordinates) {
-        super(1, 10, coordinates);
+        super(1, coordinates);
         entities.add(this);
     }
 
