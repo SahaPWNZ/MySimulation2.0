@@ -51,7 +51,7 @@ public class Simulation {
         this.countTurn = this.getCountTurn() + 1;
     }
 
-    public void mapRender() { //метод отвечающий за рендер поля
+    private void mapRender() { //метод отвечающий за рендер поля
         for (int i = 0; i < this.getHEIGHT(); i++) {
             for (int j = 0; j < this.getWIDTH(); j++) {
                 if (this.isEmptyCeil(new Coordinates(i, j))) {
@@ -65,7 +65,7 @@ public class Simulation {
 
     }
 
-    public static void nextTurn(Simulation simulation) { //метод делающий ход симуляции: ход хищников, ход травоядных, затем проверка, стоит ли добавить ещё пищи на поле
+    private static void nextTurn(Simulation simulation) { //метод делающий ход симуляции: ход хищников, ход травоядных, затем проверка, стоит ли добавить ещё пищи на поле
         simulation.nextTurnHerbivore(Herbivore.entities);
         simulation.nextTurnPredator(Predator.entities);
         if (Herbivore.entities.size() <= 1) {
@@ -78,7 +78,7 @@ public class Simulation {
         simulation.mapRender();
     }
 
-    public ArrayList<Entity> getListOfEats(Class<?> eat) { //метод возвращающий список заданного класса сущностей
+    private ArrayList<Entity> getListOfEats(Class<?> eat) { //метод возвращающий список заданного класса сущностей
         ArrayList<Entity> result = new ArrayList<>();
         for (Map.Entry<Coordinates, Entity> entry : this.getMap().entrySet()) {
             if (eat.isInstance(entry.getValue())) {
@@ -88,7 +88,7 @@ public class Simulation {
         return result;
     }
 
-    public Coordinates getCoordinatesOfClosestEat(Coordinates selfCoordinate, ArrayList<Entity> listOfEat) { //метод который ищет местонахождение ближайшей еды, путем модуля разности координат
+    private Coordinates getCoordinatesOfClosestEat(Coordinates selfCoordinate, ArrayList<Entity> listOfEat) { //метод который ищет местонахождение ближайшей еды, путем модуля разности координат
         int selfVectorCoordinate = selfCoordinate.getCol() + selfCoordinate.getRow();
         int minEatVector = getHEIGHT() + getWIDTH() + 2;
         Coordinates result = null;
@@ -102,7 +102,7 @@ public class Simulation {
         return result;
     }
 
-    public void nextTurnHerbivore(ArrayList<Herbivore> herbivores) { //метод отвечающий полностью за ход травоядного
+    private void nextTurnHerbivore(ArrayList<Herbivore> herbivores) { //метод отвечающий полностью за ход травоядного
         for (Herbivore herbivore : herbivores) {
             if (herbivore.findEat(this)) {
                 herbivore.eat(this);
@@ -123,7 +123,7 @@ public class Simulation {
         }
     }
 
-    public void nextTurnPredator(ArrayList<Predator> predators) { //метод отвечающий полностью за ход хищника
+    private void nextTurnPredator(ArrayList<Predator> predators) { //метод отвечающий полностью за ход хищника
         for (Predator predator : predators) {
             int countSpeed = 0;
             while (countSpeed < predator.getSPEED()) {
@@ -169,7 +169,7 @@ public class Simulation {
         }
     }
 
-    public void initStaticEntity() { //метод создающий статические объекты
+    private void initStaticEntity() { //метод создающий статические объекты
         int count = 6;
         while (count > 0) {
             Coordinates coordinatesRock = new Coordinates(random.nextInt(this.getHEIGHT()), random.nextInt(this.getWIDTH()));
@@ -185,7 +185,7 @@ public class Simulation {
         }
     }
 
-    public void initGrassEntity() { //метод создающий траву
+    private void initGrassEntity() { //метод создающий траву
         int count = 4;
         while (count > 0) {
             Coordinates coordinatesGrass = new Coordinates(random.nextInt(this.getHEIGHT()), random.nextInt(this.getWIDTH()));
@@ -196,7 +196,7 @@ public class Simulation {
         }
     }
 
-    public void initHerbivoreEntity() { //метод создающий травоядных
+    private void initHerbivoreEntity() { //метод создающий травоядных
         int count = 3;
         while (count > 0) {
             Coordinates coordinates = new Coordinates(random.nextInt(this.getHEIGHT()), random.nextInt(this.getWIDTH()));
@@ -207,7 +207,7 @@ public class Simulation {
         }
     }
 
-    public void initPredatorEntity() { //метод создающий хищников
+    private void initPredatorEntity() { //метод создающий хищников
         int count = 2;
         while (count > 0) {
             Coordinates coordinates = new Coordinates(random.nextInt(this.getHEIGHT()), random.nextInt(this.getWIDTH()));

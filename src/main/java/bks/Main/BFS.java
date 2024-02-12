@@ -1,10 +1,8 @@
 package bks.Main;
 
-import bks.Entities.Entity;
-
 import java.util.*;
 
-public class BFS {
+public class BFS { //класс для реализации алгоритма поиска пути
     private Coordinates start, end;
     private Queue<Coordinates> queue;
     private HashSet<Coordinates> set;
@@ -18,7 +16,7 @@ public class BFS {
         this.allPath = new HashMap<>();
     }
 
-    public Coordinates run(Simulation simulation) {
+    public Coordinates run(Simulation simulation) { //метод для запуска поиска пути и возврата координаты первого шага к цели
         queue.add(start);
         allPath.put(start, null);
         while (!queue.isEmpty()) {
@@ -44,7 +42,7 @@ public class BFS {
         return null;
     }
 
-    public ArrayList<Coordinates> getNeighbors2(Simulation simulation, Coordinates currentCoordinates) {
+    private ArrayList<Coordinates> getNeighbors2(Simulation simulation, Coordinates currentCoordinates) { //алгоримт поиска соседей под поиск пути
         ArrayList<Coordinates> listOfNeighbors = new ArrayList<>();
         int i = currentCoordinates.getRow() - 1;
         int j = currentCoordinates.getCol();
