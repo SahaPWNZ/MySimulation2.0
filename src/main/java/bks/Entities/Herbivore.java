@@ -6,7 +6,7 @@ import bks.Main.Simulation;
 import java.util.ArrayList;
 
 public final class Herbivore extends Creature {
-    public static ArrayList<Herbivore> entities = new ArrayList<>();
+    public static ArrayList<Herbivore> entities = new ArrayList<>(); // Лист хранящий травоядных
 
     public Herbivore(Coordinates coordinates) {
         super(1, coordinates);

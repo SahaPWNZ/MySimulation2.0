@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public final class Predator extends Creature {
 
-    public static ArrayList<Predator> entities = new ArrayList<>();
+    public static ArrayList<Predator> entities = new ArrayList<>(); //лист хищников
 
     public Predator(Coordinates coordinates) {
         super(2, coordinates);
@@ -105,12 +105,16 @@ public final class Predator extends Creature {
             if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
                 if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
                     simulation.makeEmptyCeil(new Coordinates(i, j));
+                    Herbivore removeHerb = null;
                     for (Herbivore herbivore : Herbivore.entities) {
                         if (herbivore.getCoordinates().equals(new Coordinates(i, j))) {
-                            Herbivore.entities.remove(herbivore);
+                            removeHerb = herbivore;
                         }
                     }
-                    break;
+                    if (removeHerb != null) {
+                        Herbivore.entities.remove(removeHerb);
+                        flag = false;
+                    }
                 }
             }
             i = coordinates.getRow() + 1;
@@ -118,12 +122,16 @@ public final class Predator extends Creature {
             if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
                 if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
                     simulation.makeEmptyCeil(new Coordinates(i, j));
+                    Herbivore removeHerb = null;
                     for (Herbivore herbivore : Herbivore.entities) {
                         if (herbivore.getCoordinates().equals(new Coordinates(i, j))) {
-                            Herbivore.entities.remove(herbivore);
+                            removeHerb = herbivore;
                         }
                     }
-                    break;
+                    if (removeHerb != null) {
+                        Herbivore.entities.remove(removeHerb);
+                        flag = false;
+                    }
                 }
             }
             i = coordinates.getRow();
@@ -131,12 +139,16 @@ public final class Predator extends Creature {
             if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
                 if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
                     simulation.makeEmptyCeil(new Coordinates(i, j));
+                    Herbivore removeHerb = null;
                     for (Herbivore herbivore : Herbivore.entities) {
                         if (herbivore.getCoordinates().equals(new Coordinates(i, j))) {
-                            Herbivore.entities.remove(herbivore);
+                            removeHerb = herbivore;
                         }
                     }
-                    break;
+                    if (removeHerb != null) {
+                        Herbivore.entities.remove(removeHerb);
+                        flag = false;
+                    }
                 }
             }
             i = coordinates.getRow();
@@ -144,12 +156,16 @@ public final class Predator extends Creature {
             if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
                 if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
                     simulation.makeEmptyCeil(new Coordinates(i, j));
+                    Herbivore removeHerb = null;
                     for (Herbivore herbivore : Herbivore.entities) {
                         if (herbivore.getCoordinates().equals(new Coordinates(i, j))) {
-                            Herbivore.entities.remove(herbivore);
+                            removeHerb = herbivore;
                         }
                     }
-                    break;
+                    if (removeHerb != null) {
+                        Herbivore.entities.remove(removeHerb);
+                        flag = false;
+                    }
                 }
             }
         }
