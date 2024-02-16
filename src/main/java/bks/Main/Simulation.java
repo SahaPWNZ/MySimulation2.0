@@ -4,44 +4,20 @@ import bks.Entities.*;
 
 import java.util.*;
 
+
 public class Simulation {
     public static Random random = new Random(); //рандом необходимый для генерации существ в свободных случайных ячейках
     public static Scanner scan = new Scanner(System.in); //сканер для продолжения/оконачания симуляции
     private int countTurn = 0; //счётчик ходов
-    private HashMap<Coordinates, Entity> map = new HashMap<>(); //структура хранящая координаты занятых сущностями ячеек
-    private final int WIDTH;
-    private final int HEIGHT;
+    private final GameMap gameMap = new GameMap(6, 4);
+    public Simulation() {
 
-
-    public Simulation(int width, int height) {
-        WIDTH = width; //количество колонок поля
-        HEIGHT = height; //количество строк поля
-    }
-
-    public HashMap<Coordinates, Entity> getMap() {
-        return map;
-    }
-
-    public boolean isEmptyCeil(Coordinates coordinates) {
-        return this.map.get(coordinates) == null; //проверка свободна ли ячейка
-    }
-
-    public void makeEmptyCeil(Coordinates coordinates) {
-        this.map.put(coordinates, null); //освобождает ячейку по заданным координатам
-    }
-
-    public boolean isEmptyCeil(Coordinates coordinates, Coordinates target) { //ещё одна вариация проверки свободной ячейки, применяемая в алгоритме поиска пути
-        return this.map.get(coordinates) == null || coordinates.equals(target);
     }
 
 
-    public int getWIDTH() {
-        return WIDTH;
-    }
 
-    public int getHEIGHT() {
-        return HEIGHT;
-    }
+
+
 
     public int getCountTurn() {
         return countTurn;
@@ -52,17 +28,21 @@ public class Simulation {
     }
 
     private void mapRender() { //метод отвечающий за рендер поля
-        for (int i = 0; i < this.getHEIGHT(); i++) {
-            for (int j = 0; j < this.getWIDTH(); j++) {
-                if (this.isEmptyCeil(new Coordinates(i, j))) {
+        for (int i = 0; i < gameMap.getHEIGHT(); i++) {
+            for (int j = 0; j < gameMap.getWIDTH(); j++) {
+                if (gameMap.isEmptyCeil(new Coordinates(i, j))) {
                     System.out.print("_" + " ");
                 } else {
-                    System.out.print(this.getMap().get(new Coordinates(i, j)) + " ");
+                    System.out.print(gameMap.getMap().get(new Coordinates(i, j)) + " ");
                 }
             }
             System.out.println();
         }
 
+    }
+
+    public GameMap getGameMap() {
+        return gameMap;
     }
 
     private static void nextTurn(Simulation simulation) { //метод делающий ход симуляции: ход хищников, ход травоядных, затем проверка, стоит ли добавить ещё пищи на поле
@@ -71,26 +51,16 @@ public class Simulation {
         if (Herbivore.entities.size() <= 1) {
             simulation.initHerbivoreEntity();
         }
-        if (simulation.getListOfEats(Grass.class).size() <= 1) {
+        if (Creature.getListOfEats(Grass.class, simulation).size() <= 1) {
             simulation.initGrassEntity();
         }
         simulation.setCountTurn();
         simulation.mapRender();
     }
 
-    private ArrayList<Entity> getListOfEats(Class<?> eat) { //метод возвращающий список заданного класса сущностей
-        ArrayList<Entity> result = new ArrayList<>();
-        for (Map.Entry<Coordinates, Entity> entry : this.getMap().entrySet()) {
-            if (eat.isInstance(entry.getValue())) {
-                result.add(entry.getValue());
-            }
-        }
-        return result;
-    }
-
     private Coordinates getCoordinatesOfClosestEat(Coordinates selfCoordinate, ArrayList<Entity> listOfEat) { //метод который ищет местонахождение ближайшей еды, путем модуля разности координат
         int selfVectorCoordinate = selfCoordinate.getCol() + selfCoordinate.getRow();
-        int minEatVector = getHEIGHT() + getWIDTH() + 2;
+        int minEatVector = gameMap.getHEIGHT() + gameMap.getWIDTH() + 2;
         Coordinates result = null;
         for (Entity entity : listOfEat) {
             int eatVectorCoordinate = entity.getCoordinates().getCol() + entity.getCoordinates().getRow();
@@ -107,7 +77,7 @@ public class Simulation {
             if (herbivore.findEat(this)) {
                 herbivore.eat(this);
             } else {
-                ArrayList<Entity> listOfEat = getListOfEats(Grass.class);
+                ArrayList<Entity> listOfEat = Creature.getListOfEats(Grass.class, this);
                 if (!listOfEat.isEmpty()) {
                     BFS bfs = new BFS(herbivore.getCoordinates(), getCoordinatesOfClosestEat(herbivore.getCoordinates(), listOfEat));
                     Coordinates turnCoordinates = bfs.run(this);
@@ -131,7 +101,7 @@ public class Simulation {
                     predator.eat(this);
                 }
                 else {
-                    ArrayList<Entity> listOfEat = getListOfEats(Herbivore.class);
+                    ArrayList<Entity> listOfEat = Creature.getListOfEats(Herbivore.class, this);
                     if (!listOfEat.isEmpty()) {
                         BFS bfs = new BFS(predator.getCoordinates(), getCoordinatesOfClosestEat(predator.getCoordinates(), listOfEat));
                         Coordinates turnCoordinates = bfs.run(this);
@@ -153,12 +123,13 @@ public class Simulation {
     public static void startSimulation() { //метод начинающий симуляцию
         System.out.println("Нажмите любую клавишу чтобы начать симуляцию");
         scan.nextLine();
-        Simulation simulation = new Simulation(12, 6);
+        Simulation simulation = new Simulation();
         simulation.initGrassEntity();
         simulation.initHerbivoreEntity();
         simulation.initPredatorEntity();
         simulation.initStaticEntity();
         simulation.mapRender();
+
         while (true) {
             System.out.println("Нажмите любую клавишу чтобы продолжить симуляцию, или 0 чтобы закончить. Текущий ход = " + simulation.getCountTurn());
             String input = scan.nextLine();
@@ -170,49 +141,49 @@ public class Simulation {
     }
 
     private void initStaticEntity() { //метод создающий статические объекты
-        int count = 6;
+        int count = 3;
         while (count > 0) {
-            Coordinates coordinatesRock = new Coordinates(random.nextInt(this.getHEIGHT()), random.nextInt(this.getWIDTH()));
-            if (this.isEmptyCeil(coordinatesRock)) {
-                this.getMap().put(coordinatesRock, new Rock(coordinatesRock));
+            Coordinates coordinatesRock = new Coordinates(random.nextInt(gameMap.getHEIGHT()), random.nextInt(gameMap.getWIDTH()));
+            if (gameMap.isEmptyCeil(coordinatesRock)) {
+                gameMap.getMap().put(coordinatesRock, new Rock(coordinatesRock));
                 count--;
             }
-            Coordinates coordinatesTree = new Coordinates(random.nextInt(this.getHEIGHT()), random.nextInt(this.getWIDTH()));
-            if (this.isEmptyCeil(coordinatesTree)) {
-                this.getMap().put(coordinatesTree, new Tree(coordinatesTree));
+            Coordinates coordinatesTree = new Coordinates(random.nextInt(gameMap.getHEIGHT()), random.nextInt(gameMap.getWIDTH()));
+            if (gameMap.isEmptyCeil(coordinatesTree)) {
+                gameMap.getMap().put(coordinatesTree, new Tree(coordinatesTree));
                 count--;
             }
         }
     }
 
     private void initGrassEntity() { //метод создающий траву
-        int count = 4;
+        int count = 3;
         while (count > 0) {
-            Coordinates coordinatesGrass = new Coordinates(random.nextInt(this.getHEIGHT()), random.nextInt(this.getWIDTH()));
-            if (this.isEmptyCeil(coordinatesGrass)) {
-                this.getMap().put(coordinatesGrass, new Grass(coordinatesGrass));
+            Coordinates coordinatesGrass = new Coordinates(random.nextInt(gameMap.getHEIGHT()), random.nextInt(gameMap.getWIDTH()));
+            if (gameMap.isEmptyCeil(coordinatesGrass)) {
+                gameMap.getMap().put(coordinatesGrass, new Grass(coordinatesGrass));
                 count--;
             }
         }
     }
 
     private void initHerbivoreEntity() { //метод создающий травоядных
-        int count = 3;
+        int count = 2;
         while (count > 0) {
-            Coordinates coordinates = new Coordinates(random.nextInt(this.getHEIGHT()), random.nextInt(this.getWIDTH()));
-            if (this.isEmptyCeil(coordinates)) {
-                this.getMap().put(coordinates, new Herbivore(coordinates));
+            Coordinates coordinates = new Coordinates(random.nextInt(gameMap.getHEIGHT()), random.nextInt(gameMap.getWIDTH()));
+            if (gameMap.isEmptyCeil(coordinates)) {
+                gameMap.getMap().put(coordinates, new Herbivore(coordinates));
                 count--;
             }
         }
     }
 
     private void initPredatorEntity() { //метод создающий хищников
-        int count = 2;
+        int count = 1;
         while (count > 0) {
-            Coordinates coordinates = new Coordinates(random.nextInt(this.getHEIGHT()), random.nextInt(this.getWIDTH()));
-            if (this.isEmptyCeil(coordinates)) {
-                this.getMap().put(coordinates, new Predator(coordinates));
+            Coordinates coordinates = new Coordinates(random.nextInt(gameMap.getHEIGHT()), random.nextInt(gameMap.getWIDTH()));
+            if (gameMap.isEmptyCeil(coordinates)) {
+                gameMap.getMap().put(coordinates, new Predator(coordinates));
                 count--;
             }
         }

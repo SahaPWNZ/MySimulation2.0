@@ -1,0 +1,40 @@
+package bks.Main;
+
+import bks.Entities.Entity;
+
+import java.util.HashMap;
+
+public class GameMap {
+    private final HashMap<Coordinates, Entity> map = new HashMap<>(); //структура хранящая координаты занятых сущностями ячеек
+    private final int WIDTH;
+    private final int HEIGHT;
+
+    public GameMap(int width, int height) {
+        WIDTH = width;
+        HEIGHT = height;
+    }
+
+    public int getWIDTH() {
+        return WIDTH;
+    }
+
+    public int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public HashMap<Coordinates, Entity> getMap() {
+        return map;
+    }
+
+    public boolean isEmptyCeil(Coordinates coordinates) {
+        return this.map.get(coordinates) == null; //проверка свободна ли ячейка
+    }
+
+    public void makeEmptyCeil(Coordinates coordinates) {
+        this.map.put(coordinates, null); //освобождает ячейку по заданным координатам
+    }
+
+    public boolean isEmptyCeil(Coordinates coordinates, Coordinates target) { //ещё одна вариация проверки свободной ячейки, применяемая в алгоритме поиска пути
+        return this.map.get(coordinates) == null || coordinates.equals(target);
+    }
+}

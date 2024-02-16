@@ -17,39 +17,37 @@ public final class Predator extends Creature {
     @Override
     public void makeMove(Simulation simulation, Coordinates oldCoordinates, Coordinates newCoordinates) {
         this.coordinates = newCoordinates;
-        simulation.makeEmptyCeil(oldCoordinates);
-        simulation.getMap().put(this.coordinates, this);
+        simulation.getGameMap().makeEmptyCeil(oldCoordinates);
+        simulation.getGameMap().getMap().put(this.coordinates, this);
     }
 
     @Override
     public boolean findEat(Simulation simulation) {
         int i = coordinates.getRow() - 1;
         int j = coordinates.getCol();
-        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-            if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
+        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+            if (simulation.getGameMap().getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
                 return true;
             }
         }
         i = coordinates.getRow() + 1;
         j = coordinates.getCol();
-        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-            if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
+        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+            if (simulation.getGameMap().getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
                 return true;
             }
         }
         i = coordinates.getRow();
         j = coordinates.getCol() + 1;
-        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-            if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
+        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+            if (simulation.getGameMap().getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
                 return true;
             }
         }
         i = coordinates.getRow();
         j = coordinates.getCol() - 1;
-        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-            if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
-                return true;
-            }
+        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+            return simulation.getGameMap().getMap().get(new Coordinates(i, j)) instanceof Herbivore;
         }
         return false;
     }
@@ -58,36 +56,36 @@ public final class Predator extends Creature {
         ArrayList<Coordinates> listOfFreeCoordinates = new ArrayList<>();
         int i = coordinates.getRow() - 1;
         int j = coordinates.getCol();
-        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
+        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+            if (simulation.getGameMap().isEmptyCeil(new Coordinates(i, j))) {
                 listOfFreeCoordinates.add(new Coordinates(i, j));
             }
         }
         i = coordinates.getRow() + 1;
         j = coordinates.getCol();
-        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
+        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+            if (simulation.getGameMap().isEmptyCeil(new Coordinates(i, j))) {
                 listOfFreeCoordinates.add(new Coordinates(i, j));
             }
         }
         i = coordinates.getRow();
         j = coordinates.getCol() + 1;
-        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
+        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+            if (simulation.getGameMap().isEmptyCeil(new Coordinates(i, j))) {
                 listOfFreeCoordinates.add(new Coordinates(i, j));
             }
         }
         i = coordinates.getRow();
         j = coordinates.getCol() - 1;
-        if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-            if (simulation.isEmptyCeil(new Coordinates(i, j))) {
+        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+            if (simulation.getGameMap().isEmptyCeil(new Coordinates(i, j))) {
                 listOfFreeCoordinates.add(new Coordinates(i, j));
             }
         }
         if (!listOfFreeCoordinates.isEmpty()) {
-            simulation.makeEmptyCeil(this.coordinates);
+            simulation.getGameMap().makeEmptyCeil(this.coordinates);
             this.coordinates = listOfFreeCoordinates.get(Simulation.random.nextInt(listOfFreeCoordinates.size()));
-            simulation.getMap().put(this.coordinates, this);
+            simulation.getGameMap().getMap().put(this.coordinates, this);
         }
     }
 
@@ -102,9 +100,9 @@ public final class Predator extends Creature {
         while (flag) {
             int i = coordinates.getRow() - 1;
             int j = coordinates.getCol();
-            if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-                if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
-                    simulation.makeEmptyCeil(new Coordinates(i, j));
+            if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+                if (simulation.getGameMap().getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
+                    simulation.getGameMap().makeEmptyCeil(new Coordinates(i, j));
                     Herbivore removeHerb = null;
                     for (Herbivore herbivore : Herbivore.entities) {
                         if (herbivore.getCoordinates().equals(new Coordinates(i, j))) {
@@ -119,9 +117,9 @@ public final class Predator extends Creature {
             }
             i = coordinates.getRow() + 1;
             j = coordinates.getCol();
-            if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-                if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
-                    simulation.makeEmptyCeil(new Coordinates(i, j));
+            if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+                if (simulation.getGameMap().getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
+                    simulation.getGameMap().makeEmptyCeil(new Coordinates(i, j));
                     Herbivore removeHerb = null;
                     for (Herbivore herbivore : Herbivore.entities) {
                         if (herbivore.getCoordinates().equals(new Coordinates(i, j))) {
@@ -136,9 +134,9 @@ public final class Predator extends Creature {
             }
             i = coordinates.getRow();
             j = coordinates.getCol() + 1;
-            if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-                if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
-                    simulation.makeEmptyCeil(new Coordinates(i, j));
+            if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+                if (simulation.getGameMap().getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
+                    simulation.getGameMap().makeEmptyCeil(new Coordinates(i, j));
                     Herbivore removeHerb = null;
                     for (Herbivore herbivore : Herbivore.entities) {
                         if (herbivore.getCoordinates().equals(new Coordinates(i, j))) {
@@ -153,9 +151,9 @@ public final class Predator extends Creature {
             }
             i = coordinates.getRow();
             j = coordinates.getCol() - 1;
-            if (i < simulation.getHEIGHT() && i >= 0 && j < simulation.getWIDTH() && j >= 0) {
-                if (simulation.getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
-                    simulation.makeEmptyCeil(new Coordinates(i, j));
+            if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
+                if (simulation.getGameMap().getMap().get(new Coordinates(i, j)) instanceof Herbivore) {
+                    simulation.getGameMap().makeEmptyCeil(new Coordinates(i, j));
                     Herbivore removeHerb = null;
                     for (Herbivore herbivore : Herbivore.entities) {
                         if (herbivore.getCoordinates().equals(new Coordinates(i, j))) {
