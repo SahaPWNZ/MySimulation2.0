@@ -10,20 +10,12 @@ public class Simulation {
     public static Scanner scan = new Scanner(System.in); //сканер для продолжения/оконачания симуляции
     private int countTurn = 0; //счётчик ходов
     private final GameMap gameMap = new GameMap(6, 4);
-    public Simulation() {
 
-    }
-
-
-
-
-
-
-    public int getCountTurn() {
+    private int getCountTurn() {
         return countTurn;
     }
 
-    public void setCountTurn() {
+    private void setCountTurn() {
         this.countTurn = this.getCountTurn() + 1;
     }
 
@@ -97,10 +89,9 @@ public class Simulation {
         for (Predator predator : predators) {
             int countSpeed = 0;
             while (countSpeed < predator.getSPEED()) {
-                if (predator.findEat(this)){
+                if (predator.findEat(this)) {
                     predator.eat(this);
-                }
-                else {
+                } else {
                     ArrayList<Entity> listOfEat = Creature.getListOfEats(Herbivore.class, this);
                     if (!listOfEat.isEmpty()) {
                         BFS bfs = new BFS(predator.getCoordinates(), getCoordinatesOfClosestEat(predator.getCoordinates(), listOfEat));
