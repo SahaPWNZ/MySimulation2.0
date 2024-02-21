@@ -18,13 +18,26 @@ public abstract class Creature extends Entity {
         return SPEED;
     }
 
-    abstract void makeMove(Simulation simulation, Coordinates oldCoordinates, Coordinates newCoordinates);//метод отвечающий за перемещение
+    public abstract void makeMove(Simulation simulation, Coordinates oldCoordinates, Coordinates newCoordinates);//метод отвечающий за перемещение
 
     public abstract boolean findEat(Simulation simulation); //проверяет соседние ячейки на наличие еды
 
     public abstract void randomMove(Simulation simulation); // метод перемещающий в рандомную свободную соседнюю ячейку
 
     public abstract void eat(Simulation simulation); //поиск и поедание еды в соседней ячейке
+    public Coordinates getCoordinatesOfClosestEat(Simulation simulation, ArrayList<Entity> listOfEat){
+        int selfVectorCoordinate = this.getCoordinates().getCol() + this.getCoordinates().getRow();
+        int minEatVector = simulation.getGameMap().getHEIGHT() + simulation.getGameMap().getWIDTH() + 2;
+        Coordinates result = null;
+        for (Entity entity : listOfEat) {
+            int eatVectorCoordinate = entity.getCoordinates().getCol() + entity.getCoordinates().getRow();
+            if (minEatVector > Math.abs(eatVectorCoordinate - selfVectorCoordinate)) {
+                minEatVector = Math.abs(eatVectorCoordinate - selfVectorCoordinate);
+                result = entity.getCoordinates();
+            }
+        }
+        return result;
+    }
 
     public static ArrayList<Entity> getListOfEats(Class<?> eat, Simulation simulation) { //метод возвращающий список заданного класса сущностей
         ArrayList<Entity> result = new ArrayList<>();
