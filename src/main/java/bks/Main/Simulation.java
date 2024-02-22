@@ -42,7 +42,6 @@ public class Simulation {
             }
             System.out.println();
         }
-
     }
 
     public GameMap getGameMap() {

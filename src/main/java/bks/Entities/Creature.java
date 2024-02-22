@@ -1,6 +1,7 @@
 package bks.Entities;
 
 import bks.Main.Coordinates;
+import bks.Main.GameMap;
 import bks.Main.Simulation;
 
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ public abstract class Creature extends Entity {
         return SPEED;
     }
 
-    public abstract void makeMove(Simulation simulation, Coordinates oldCoordinates, Coordinates newCoordinates);//метод отвечающий за перемещение
+    public abstract void makeMove(GameMap map, Coordinates oldCoordinates, Coordinates newCoordinates);//метод отвечающий за перемещение
 
-    public abstract boolean findEat(Simulation simulation); //проверяет соседние ячейки на наличие еды
+    public abstract boolean findEat(GameMap map); //проверяет соседние ячейки на наличие еды
 
     public abstract void randomMove(Simulation simulation); // метод перемещающий в рандомную свободную соседнюю ячейку
 

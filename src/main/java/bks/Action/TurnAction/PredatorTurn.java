@@ -11,7 +11,7 @@ public class PredatorTurn extends TurnAction{
     @Override
     public void makeTurnAction(Simulation simulation) {
         for (Predator predator : Predator.entities) {
-            if (predator.findEat(simulation)) {
+            if (predator.findEat(simulation.getGameMap())) {
                 predator.eat(simulation);
             } else {
                 ArrayList<Entity> listOfEat = Creature.getListOfEats(Herbivore.class, simulation);
@@ -19,7 +19,7 @@ public class PredatorTurn extends TurnAction{
                     BFS bfs = new BFS(predator.getCoordinates(), predator.getCoordinatesOfClosestEat(simulation, listOfEat));
                     Coordinates turnCoordinates = bfs.run(simulation);
                     if (turnCoordinates != null) {
-                        predator.makeMove(simulation, predator.getCoordinates(), turnCoordinates);
+                        predator.makeMove(simulation.getGameMap(), predator.getCoordinates(), turnCoordinates);
                     } else {
                         predator.randomMove(simulation);
                     }
