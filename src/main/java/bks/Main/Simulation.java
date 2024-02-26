@@ -52,7 +52,6 @@ public class Simulation {
             }
             System.out.println();
         }
-
     }
 
     private void nextTurn() { //метод делающий ход симуляции: ход хищников, ход травоядных, затем проверка, стоит ли добавить ещё пищи на поле
