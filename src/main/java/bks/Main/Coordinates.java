@@ -39,4 +39,14 @@ public class Coordinates {
         return row;
     }
 
+    public static boolean validCoordinates(Coordinates coord, GameMap map) {
+        return ((coord.getRow() < map.getHEIGHT() && coord.getRow() >= 0) && (coord.getCol() < map.getWIDTH() && coord.getCol() >= 0));
+    }
+
+    public int[][] getArrayOfCoordinatesNeighbors() {
+        return new int[][]{{-1 + this.getRow(), this.getCol()},
+                {1 + this.getRow(), this.getCol()},
+                {this.getRow(), this.getCol() - 1},
+                {this.getRow(), this.getCol() + 1}};
+    }
 }

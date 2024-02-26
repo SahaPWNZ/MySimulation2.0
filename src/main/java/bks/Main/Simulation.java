@@ -13,22 +13,32 @@ import java.util.*;
 public class Simulation {
     public static Random random = new Random(); //рандом необходимый для генерации существ в свободных случайных ячейках
     public static Scanner scan = new Scanner(System.in); //сканер для продолжения/оконачания симуляции
-    private int countTurn = 0; //счётчик ходов
-    private final GameMap gameMap = new GameMap(8, 5);
+    private int countTurn; //счётчик ходов
+    public final GameMap gameMap;
     private final ArrayList<InitAction> initAction;
     private ArrayList<Action> turnAction;
 
 
-    public Simulation() {
-        this.initAction = new ArrayList<InitAction>();
+    public Simulation(int width, int height) {
+        countTurn = 0;
+        this.gameMap = new GameMap(width, height);
+        this.initAction = new ArrayList<>();
     }
 
     private int getCountTurn() {
         return countTurn;
     }
-
-    private void setCountTurn() {
-        this.countTurn = this.getCountTurn() + 1;
+    public GameMap getGameMap() {
+        return gameMap;
+    }
+    private void addCountTurn(){
+        countTurn = getCountTurn() +1;
+    }
+    public void createInitActions() {
+        initAction.add(new initHerbivores());
+        initAction.add(new InitStaticObject());
+        initAction.add(new InitGrassSpawn());
+        initAction.add(new InitPredatorsSpawn());
     }
 
     private void mapRender() { //метод отвечающий за рендер поля
@@ -45,39 +55,35 @@ public class Simulation {
 
     }
 
-    public GameMap getGameMap() {
-        return gameMap;
-    }
-
-    private static void nextTurn(Simulation simulation) { //метод делающий ход симуляции: ход хищников, ход травоядных, затем проверка, стоит ли добавить ещё пищи на поле
-        simulation.turnAction = new ArrayList<>();
-        simulation.turnAction.add(new HerbivoreTurn());
-        simulation.turnAction.add(new PredatorTurn());
+    private void nextTurn() { //метод делающий ход симуляции: ход хищников, ход травоядных, затем проверка, стоит ли добавить ещё пищи на поле
+        turnAction = new ArrayList<>();
+        turnAction.add(new HerbivoreTurn());
+        turnAction.add(new PredatorTurn());
         if (Herbivore.entities.size() <= 1) {
-            simulation.turnAction.add(new initHerbivores());
+           turnAction.add(new initHerbivores());
         }
-        if (Creature.getListOfEats(Grass.class, simulation).size() <= 1) {
-            simulation.turnAction.add(new InitGrassSpawn());
+        if (Creature.getListOfEats(Grass.class, getGameMap()).size() <= 1) {
+            turnAction.add(new InitGrassSpawn());
         }
-        for (Action action : simulation.turnAction) {
+        for (Action action : turnAction) {
             if (action instanceof TurnAction) {
-                ((TurnAction) action).makeTurnAction(simulation);
+                ((TurnAction) action).makeTurnAction(this);
             } else {
-                ((InitAction) action).makeAction(simulation);
+                ((InitAction) action).makeAction(this.getGameMap());
             }
         }
-        simulation.setCountTurn();
-        simulation.mapRender();
+        addCountTurn();
+        mapRender();
     }
 
 
     public static void startSimulation() { //метод начинающий симуляцию
         System.out.println("Нажмите любую клавишу чтобы начать симуляцию");
         scan.nextLine();
-        Simulation simulation = new Simulation();
+        Simulation simulation = new Simulation(8, 5);
         simulation.createInitActions();
         for (InitAction action : simulation.initAction) {
-            action.makeAction(simulation);
+            action.makeAction(simulation.getGameMap());
         }
         simulation.mapRender();
 
@@ -87,14 +93,9 @@ public class Simulation {
             if (input.equals("0")) {
                 System.exit(0);
             }
-            nextTurn(simulation);
+            simulation.nextTurn();
         }
     }
 
-    public void createInitActions() {
-        initAction.add(new initHerbivores());
-        initAction.add(new InitStaticObject());
-        initAction.add(new InitGrassSpawn());
-        initAction.add(new InitPredatorsSpawn());
-    }
+
 }

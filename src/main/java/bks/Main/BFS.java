@@ -9,7 +9,7 @@ public class BFS { //класс для реализации алгоритма �
     private final HashSet<Coordinates> set;
     private final HashMap<Coordinates, Coordinates> allPath;
 
-    public BFS( Coordinates start, Coordinates end) {
+    public BFS(Coordinates start, Coordinates end) {
         this.start = start;
         this.end = end;
         this.queue = new LinkedList<>();
@@ -32,7 +32,7 @@ public class BFS { //класс для реализации алгоритма �
                     }
                     return path.get(1);
                 }
-                for (Coordinates neighborCoord : getNeighbors2(simulation, currentCoordinates)) {
+                for (Coordinates neighborCoord : getNeighbors2(simulation.getGameMap(), currentCoordinates)) {
                     if (!queue.contains(neighborCoord) && !(allPath.containsKey(neighborCoord))) {
                         queue.add(neighborCoord);
                         allPath.put(neighborCoord, currentCoordinates);
@@ -43,34 +43,13 @@ public class BFS { //класс для реализации алгоритма �
         return null;
     }
 
-    private ArrayList<Coordinates> getNeighbors2(Simulation simulation, Coordinates currentCoordinates) { //алгоримт поиска соседей под поиск пути
+    private ArrayList<Coordinates> getNeighbors2(GameMap map, Coordinates coordinates) { //алгоримт поиска соседей под поиск пути
         ArrayList<Coordinates> listOfNeighbors = new ArrayList<>();
-        int i = currentCoordinates.getRow() - 1;
-        int j = currentCoordinates.getCol();
-        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
-            if (simulation.getGameMap().isEmptyCeil(new Coordinates(i, j), end)) {
-                listOfNeighbors.add(new Coordinates(i, j));
-            }
-        }
-        i = currentCoordinates.getRow() + 1;
-        j = currentCoordinates.getCol();
-        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
-            if (simulation.getGameMap().isEmptyCeil(new Coordinates(i, j), end)) {
-                listOfNeighbors.add(new Coordinates(i, j));
-            }
-        }
-        i = currentCoordinates.getRow();
-        j = currentCoordinates.getCol() + 1;
-        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
-            if (simulation.getGameMap().isEmptyCeil(new Coordinates(i, j), end)) {
-                listOfNeighbors.add(new Coordinates(i, j));
-            }
-        }
-        i = currentCoordinates.getRow();
-        j = currentCoordinates.getCol() - 1;
-        if (i < simulation.getGameMap().getHEIGHT() && i >= 0 && j < simulation.getGameMap().getWIDTH() && j >= 0) {
-            if (simulation.getGameMap().isEmptyCeil(new Coordinates(i, j), end)) {
-                listOfNeighbors.add(new Coordinates(i, j));
+        int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
+        for (int[] pairOfCoord : array) {
+            if (Coordinates.validCoordinates(new Coordinates(pairOfCoord[0], pairOfCoord[1]), map)
+                    && map.isEmptyCeil(new Coordinates(pairOfCoord[0], pairOfCoord[1]), end)) {
+                listOfNeighbors.add(new Coordinates(pairOfCoord[0], pairOfCoord[1]));
             }
         }
         return listOfNeighbors;
