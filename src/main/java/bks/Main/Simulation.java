@@ -13,6 +13,7 @@ import java.util.*;
 public class Simulation {
     public static Random random = new Random(); //рандом необходимый для генерации существ в свободных случайных ячейках
     public static Scanner scan = new Scanner(System.in); //сканер для продолжения/оконачания симуляции
+    private HashMap<Entity, Integer> allEntity = new HashMap<>();
     private int countTurn; //счётчик ходов
     public final GameMap gameMap;
     private final ArrayList<InitAction> initAction;
