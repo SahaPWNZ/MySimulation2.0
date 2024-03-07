@@ -7,6 +7,7 @@ import bks.Action.TurnAction.PredatorTurn;
 import bks.Action.TurnAction.TurnAction;
 import bks.Entities.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 
@@ -43,27 +44,23 @@ public class Simulation {
     }
 
     private void mapRender() { //метод отвечающий за рендер поля
-        InitActionTest initTest = new InitActionTest();
         for (int i = 0; i < gameMap.getHEIGHT(); i++) {
             for (int j = 0; j < gameMap.getWIDTH(); j++) {
                 if (gameMap.isEmptyCeil(new Coordinates(i, j))) {
                     System.out.print("_" + " ");
                 } else {
                     System.out.print(gameMap.getMap().get(new Coordinates(i, j)) + " ");
-                    initTest.addInMapEntity(gameMap.getMap().get(new Coordinates(i, j)).getClass().getName().substring(13));
+
                 }
             }
             System.out.println();
-
         }
-        initTest.printMapEntity();
     }
 
     private void nextTurn() { //метод делающий ход симуляции: ход хищников, ход травоядных, затем проверка, стоит ли добавить ещё пищи на поле
         turnAction = new ArrayList<>();
         turnAction.add(new HerbivoreTurn());
         turnAction.add(new PredatorTurn());
-
 
         if (Herbivore.entities.size() <= 1) {
            turnAction.add(new initHerbivores());
@@ -83,7 +80,7 @@ public class Simulation {
     }
 
 
-    public static void startSimulation() { //метод начинающий симуляцию
+    public static void startSimulation() throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException { //метод начинающий симуляцию
         System.out.println("Нажмите любую клавишу чтобы начать симуляцию");
         scan.nextLine();
         Simulation simulation = new Simulation(8, 5);

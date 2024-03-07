@@ -2,8 +2,8 @@ package bks.Action.InitAction;
 
 import bks.Action.Action;
 import bks.Main.GameMap;
-import bks.Main.Simulation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public abstract class InitAction extends Action {
