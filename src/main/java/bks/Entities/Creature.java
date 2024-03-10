@@ -1,17 +1,17 @@
 package bks.Entities;
 
+import bks.Action.InitAction.InitAction;
 import bks.Main.Coordinates;
 import bks.Main.GameMap;
 import bks.Main.Simulation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Creature extends Entity {
-    private final int SPEED;
-
-    Creature(int speed, Coordinates coordinates) {
-        this.SPEED = speed;
+public static ArrayList<? extends Creature> entities;
+    Creature(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 
@@ -47,16 +47,18 @@ public abstract class Creature extends Entity {
         map.makeEmptyCeil(oldCoordinates);
         map.getMap().put(coordinates, this);
     }
-    public  boolean findEat(GameMap map, Class<?> foodClass){ //проверяет соседние ячейки на наличие еды
+
+    public boolean findEat(GameMap map, Class<?> foodClass) { //проверяет соседние ячейки на наличие еды
         int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
         for (int[] pairOfCoord : array) {
             if (Coordinates.validCoordinates(new Coordinates(pairOfCoord[0], pairOfCoord[1]), map) &&
-                    foodClass.isInstance(map.getMap().get(new Coordinates(pairOfCoord[0], pairOfCoord[1])))){
+                    foodClass.isInstance(map.getMap().get(new Coordinates(pairOfCoord[0], pairOfCoord[1])))) {
                 return true;
             }
         }
         return false;
     }
+
     public void randomMove(GameMap map) {
         ArrayList<Coordinates> listOfFreeCoordinates = new ArrayList<>();
         int[][] array = {{-1 + coordinates.getRow(), coordinates.getCol()},
@@ -70,7 +72,7 @@ public abstract class Creature extends Entity {
             }
             if (!listOfFreeCoordinates.isEmpty()) {
                 map.makeEmptyCeil(this.coordinates);
-                this.coordinates = listOfFreeCoordinates.get(Simulation.random.nextInt(listOfFreeCoordinates.size()));
+                this.coordinates = listOfFreeCoordinates.get(InitAction.random.nextInt(listOfFreeCoordinates.size()));
                 map.getMap().put(this.coordinates, this);
             }
         }

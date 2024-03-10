@@ -10,7 +10,7 @@ public final class Predator extends Creature {
     public static ArrayList<Predator> entities = new ArrayList<>(); //лист хищников
 
     public Predator(Coordinates coordinates) {
-        super(1, coordinates);
+        super( coordinates);
         entities.add(this);
     }
 
