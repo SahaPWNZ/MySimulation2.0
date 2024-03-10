@@ -19,7 +19,6 @@ public class Simulation {
     public Simulation(int width, int height) {
         countTurn = 0;
         this.gameMap = new GameMap(width, height);
-        this.initAction = new ArrayList<>();
     }
 
     private int getCountTurn() {
