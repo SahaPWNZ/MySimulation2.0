@@ -13,7 +13,6 @@ public class Simulation {
     public static Scanner scan = new Scanner(System.in); //сканер для продолжения/оконачания симуляции
     private int countTurn; //счётчик ходов
     public final GameMap gameMap;
-    private ArrayList<Action> turnAction;
 
 
     public Simulation(int width, int height) {
@@ -49,7 +48,7 @@ public class Simulation {
     }
 
     private void nextTurn() { //метод делающий ход симуляции: ход хищников, ход травоядных, затем проверка, стоит ли добавить ещё пищи на поле
-        turnAction = new ArrayList<>();
+        ArrayList<Action> turnAction = new ArrayList<>();
         turnAction.add(new HerbivoreTurn());
         turnAction.add(new PredatorTurn());
         turnAction.add(new SpawnAction());

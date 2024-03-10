@@ -3,10 +3,8 @@ package bks.Entities;
 import bks.Action.InitAction.InitAction;
 import bks.Main.Coordinates;
 import bks.Main.GameMap;
-import bks.Main.Simulation;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Creature extends Entity {
