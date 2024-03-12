@@ -2,7 +2,7 @@ package bks.Action.InitAction;
 
 import bks.Main.GameMap;
 
-public class InitSpawnAction extends InitAction {
+public final class InitSpawnAction extends InitAction {
 
     @Override
     public void makeAction(GameMap map) {

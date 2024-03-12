@@ -40,7 +40,7 @@ public class Coordinates {
     }
 
     public static boolean validCoordinates(Coordinates coord, GameMap map) {
-        return ((coord.getRow() < map.getHEIGHT() && coord.getRow() >= 0) && (coord.getCol() < map.getWIDTH() && coord.getCol() >= 0));
+        return (coord.getRow() < map.getHEIGHT() && coord.getRow() >= 0) && (coord.getCol() < map.getWIDTH() && coord.getCol() >= 0);
     }
 
     public int[][] getArrayOfCoordinatesNeighbors() {

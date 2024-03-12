@@ -9,13 +9,13 @@ public final class Herbivore extends Creature {
     public static ArrayList<Herbivore> entities = new ArrayList<>(); // Лист хранящий травоядных
 
     public Herbivore(Coordinates coordinates) {
-        super( coordinates);
+        super (coordinates);
         entities.add(this);
     }
 
     @Override
     public void eat(GameMap map) {
-        int[][] array = this.coordinates.getArrayOfCoordinatesNeighbors();
+        int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
         for (int[] pairOfCoord : array) {
             if (map.getMap().get(new Coordinates(pairOfCoord[0], pairOfCoord[1])) instanceof Grass) {
                 map.makeEmptyCeil(new Coordinates(pairOfCoord[0], pairOfCoord[1]));

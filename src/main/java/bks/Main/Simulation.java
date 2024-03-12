@@ -10,12 +10,14 @@ import java.util.*;
 
 
 public class Simulation {
-    public static Scanner scan = new Scanner(System.in); //сканер для продолжения/оконачания симуляции
+    protected static Scanner scan = new Scanner(System.in); //сканер для продолжения/оконачания симуляции
     private int countTurn; //счётчик ходов
-    public final GameMap gameMap;
+    private final GameMap gameMap;
+    private static final int WIDTH = 9;
+    private static final int HEIGHT = 6;
 
 
-    public Simulation(int width, int height) {
+    private Simulation(int width, int height) {
         countTurn = 0;
         this.gameMap = new GameMap(width, height);
     }
@@ -67,11 +69,10 @@ public class Simulation {
     public static void startSimulation() { //метод начинающий симуляцию
         System.out.println("Нажмите любую клавишу чтобы начать симуляцию");
         scan.nextLine();
-        Simulation simulation = new Simulation(8, 5);
+        Simulation simulation = new Simulation(WIDTH, HEIGHT);
         InitSpawnAction initAction = new InitSpawnAction();
         initAction.makeAction(simulation.getGameMap());
         simulation.mapRender();
-
         while (true) {
             System.out.println("Нажмите любую клавишу чтобы продолжить симуляцию, или 0 чтобы закончить. Текущий ход = " + simulation.getCountTurn());
             String input = scan.nextLine();

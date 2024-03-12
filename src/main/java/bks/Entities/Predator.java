@@ -14,9 +14,6 @@ public final class Predator extends Creature {
         entities.add(this);
     }
 
-
-
-
     @Override
     public String toString() {
         return "P";
@@ -24,7 +21,7 @@ public final class Predator extends Creature {
 
     @Override
     public void eat(GameMap map) {
-        int[][] array = this.coordinates.getArrayOfCoordinatesNeighbors();
+        int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
         for (int[] pairOfCoord : array) {
             for (Herbivore herbivore : Herbivore.entities) {
                 if (herbivore.getCoordinates().equals(new Coordinates(pairOfCoord[0], pairOfCoord[1]))) {

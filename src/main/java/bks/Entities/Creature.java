@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public abstract class Creature extends Entity {
-public static ArrayList<? extends Creature> entities;
+    public static ArrayList<? extends Creature> entities;
+
     Creature(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
@@ -59,10 +60,7 @@ public static ArrayList<? extends Creature> entities;
 
     public void randomMove(GameMap map) {
         ArrayList<Coordinates> listOfFreeCoordinates = new ArrayList<>();
-        int[][] array = {{-1 + coordinates.getRow(), coordinates.getCol()},
-                {1 + coordinates.getRow(), coordinates.getCol()},
-                {coordinates.getRow(), coordinates.getCol() - 1},
-                {coordinates.getRow(), coordinates.getCol() + 1}};
+        int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
         for (int[] pairOfCoord : array) {
             if (Coordinates.validCoordinates(new Coordinates(pairOfCoord[0], pairOfCoord[1]), map)
                     && map.isEmptyCeil(new Coordinates(pairOfCoord[0], pairOfCoord[1]))) {

@@ -32,7 +32,7 @@ public class BFS { //класс для реализации алгоритма �
                     }
                     return path.get(1);
                 }
-                for (Coordinates neighborCoord : getNeighbors2(simulation.getGameMap(), currentCoordinates)) {
+                for (Coordinates neighborCoord : getNeighborsBFS(simulation.getGameMap(), currentCoordinates)) {
                     if (!queue.contains(neighborCoord) && !(allPath.containsKey(neighborCoord))) {
                         queue.add(neighborCoord);
                         allPath.put(neighborCoord, currentCoordinates);
@@ -43,7 +43,7 @@ public class BFS { //класс для реализации алгоритма �
         return null;
     }
 
-    private ArrayList<Coordinates> getNeighbors2(GameMap map, Coordinates coordinates) { //алгоримт поиска соседей под поиск пути
+    private ArrayList<Coordinates> getNeighborsBFS(GameMap map, Coordinates coordinates) { //алгоримт поиска соседей под поиск пути
         ArrayList<Coordinates> listOfNeighbors = new ArrayList<>();
         int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
         for (int[] pairOfCoord : array) {
