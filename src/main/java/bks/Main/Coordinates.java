@@ -1,27 +1,6 @@
 package bks.Main;
 
-import java.util.Objects;
-
-public class Coordinates {
-    private final int col, row;
-
-    public Coordinates(int row, int col) {
-        this.col = col;
-        this.row = row;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Coordinates that = (Coordinates) o;
-        return col == that.col && row == that.row;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(col, row);
-    }
+public record Coordinates(int row, int col) {
 
     @Override
     public String toString() {
@@ -31,22 +10,14 @@ public class Coordinates {
                 '}';
     }
 
-    public int getCol() {
-        return col;
+    public static boolean isValidCoordinates(Coordinates coord, GameMap map) { //проверяет координату на валидность
+        return (coord.row() < map.getHEIGHT() && coord.row() >= 0) && (coord.col() < map.getWIDTH() && coord.col() >= 0);
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public static boolean validCoordinates(Coordinates coord, GameMap map) {
-        return (coord.getRow() < map.getHEIGHT() && coord.getRow() >= 0) && (coord.getCol() < map.getWIDTH() && coord.getCol() >= 0);
-    }
-
-    public int[][] getArrayOfCoordinatesNeighbors() {
-        return new int[][]{{-1 + this.getRow(), this.getCol()},
-                {1 + this.getRow(), this.getCol()},
-                {this.getRow(), this.getCol() - 1},
-                {this.getRow(), this.getCol() + 1}};
+    public int[][] getArrayOfCoordinatesNeighbors() { // возвращает массив массивов значений координат соседей
+        return new int[][]{{-1 + this.row(), this.col()},
+                {1 + this.row(), this.col()},
+                {this.row(), this.col() - 1},
+                {this.row(), this.col() + 1}};
     }
 }

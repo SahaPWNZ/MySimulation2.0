@@ -12,12 +12,12 @@ public class BFS { //класс для реализации алгоритма �
     public BFS(Coordinates start, Coordinates end) {
         this.start = start;
         this.end = end;
-        this.queue = new LinkedList<>();
-        this.set = new HashSet<>();
-        this.allPath = new HashMap<>();
+        queue = new LinkedList<>();
+        set = new HashSet<>();
+        allPath = new HashMap<>();
     }
 
-    public Coordinates run(Simulation simulation) { //метод для запуска поиска пути и возврата координаты первого шага к цели
+    public Coordinates runBFS(Simulation simulation) { //метод для запуска поиска пути и возврата координаты первого шага к цели
         queue.add(start);
         allPath.put(start, null);
         while (!queue.isEmpty()) {
@@ -47,7 +47,7 @@ public class BFS { //класс для реализации алгоритма �
         ArrayList<Coordinates> listOfNeighbors = new ArrayList<>();
         int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
         for (int[] pairOfCoord : array) {
-            if (Coordinates.validCoordinates(new Coordinates(pairOfCoord[0], pairOfCoord[1]), map)
+            if (Coordinates.isValidCoordinates(new Coordinates(pairOfCoord[0], pairOfCoord[1]), map)
                     && map.isEmptyCeil(new Coordinates(pairOfCoord[0], pairOfCoord[1]), end)) {
                 listOfNeighbors.add(new Coordinates(pairOfCoord[0], pairOfCoord[1]));
             }

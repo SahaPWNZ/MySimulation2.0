@@ -12,14 +12,14 @@ public final class SpawnAction extends InitAction {
         checkAndSpawnHerbivore(map);
     }
     private void checkAndSpawnHerbivore(GameMap map) {
-        if (Herbivore.entities.size() <= 1){
-            initHerbivore(map, Herbivore.entities.size());
+        if (Creature.getListOfEntity(Herbivore.class, map).size() <= 1){
+            initHerbivore(map, Creature.getListOfEntity(Herbivore.class, map).size());
         }
     }
 
     private void checkAndSpawnGrass(GameMap map) {
-        if (Creature.getListOfEats(Grass.class, map).size() <= 1) {
-            initGrass(map, Creature.getListOfEats(Grass.class, map).size());
+        if (Creature.getListOfEntity(Grass.class, map).size() <= 1) {
+            initGrass(map, Creature.getListOfEntity(Grass.class, map).size());
         }
     }
 }

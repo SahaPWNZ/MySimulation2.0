@@ -16,10 +16,9 @@ public class Simulation {
     private static final int WIDTH = 9;
     private static final int HEIGHT = 6;
 
-
     private Simulation(int width, int height) {
         countTurn = 0;
-        this.gameMap = new GameMap(width, height);
+        gameMap = new GameMap(width, height);
     }
 
     private int getCountTurn() {
@@ -35,7 +34,7 @@ public class Simulation {
     }
 
 
-    private void mapRender() { //метод отвечающий за рендер поля
+    private void renderMap() { //метод отвечающий за рендер поля
         for (int i = 0; i < gameMap.getHEIGHT(); i++) {
             for (int j = 0; j < gameMap.getWIDTH(); j++) {
                 if (gameMap.isEmptyCeil(new Coordinates(i, j))) {
@@ -49,7 +48,7 @@ public class Simulation {
         }
     }
 
-    private void nextTurn() { //метод делающий ход симуляции: ход хищников, ход травоядных, затем проверка, стоит ли добавить ещё пищи на поле
+    private void makeNextTurn() { //метод делающий ход симуляции: ход хищников, ход травоядных, и спавн доп сущностей
         ArrayList<Action> turnAction = new ArrayList<>();
         turnAction.add(new HerbivoreTurn());
         turnAction.add(new PredatorTurn());
@@ -62,7 +61,7 @@ public class Simulation {
             }
         }
         addCountTurn();
-        mapRender();
+        renderMap();
     }
 
 
@@ -72,14 +71,14 @@ public class Simulation {
         Simulation simulation = new Simulation(WIDTH, HEIGHT);
         InitSpawnAction initAction = new InitSpawnAction();
         initAction.makeAction(simulation.getGameMap());
-        simulation.mapRender();
+        simulation.renderMap();
         while (true) {
             System.out.println("Нажмите любую клавишу чтобы продолжить симуляцию, или 0 чтобы закончить. Текущий ход = " + simulation.getCountTurn());
             String input = scan.nextLine();
             if (input.equals("0")) {
                 System.exit(0);
             }
-            simulation.nextTurn();
+            simulation.makeNextTurn();
         }
     }
 

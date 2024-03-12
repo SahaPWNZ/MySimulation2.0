@@ -15,14 +15,14 @@ public abstract class Creature extends Entity {
     }
 
 
-    public abstract void eat(GameMap map); //поиск и поедание еды в соседней ячейке
+    public abstract void eat(GameMap map); //поедание еды в соседней ячейке
 
-    public Coordinates getCoordinatesOfClosestEat(GameMap map, ArrayList<Entity> listOfEat) {
-        int selfVectorCoordinate = this.getCoordinates().getCol() + this.getCoordinates().getRow();
+    public Coordinates getCoordinatesOfClosestEat(GameMap map, ArrayList<Entity> listOfEat) { //поиск и выбор цели
+        int selfVectorCoordinate = this.getCoordinates().col() + this.getCoordinates().row();
         int minEatVector = map.getHEIGHT() + map.getWIDTH() + 2;
         Coordinates result = null;
         for (Entity entity : listOfEat) {
-            int eatVectorCoordinate = entity.getCoordinates().getCol() + entity.getCoordinates().getRow();
+            int eatVectorCoordinate = entity.getCoordinates().col() + entity.getCoordinates().row();
             if (minEatVector > Math.abs(eatVectorCoordinate - selfVectorCoordinate)) {
                 minEatVector = Math.abs(eatVectorCoordinate - selfVectorCoordinate);
                 result = entity.getCoordinates();
@@ -31,10 +31,10 @@ public abstract class Creature extends Entity {
         return result;
     }
 
-    public static ArrayList<Entity> getListOfEats(Class<?> eat, GameMap map) { //метод возвращающий список заданного класса сущностей
+    public static ArrayList<Entity> getListOfEntity(Class<?> entity, GameMap map) { //метод возвращающий список заданного класса сущностей
         ArrayList<Entity> result = new ArrayList<>();
         for (Map.Entry<Coordinates, Entity> entry : map.getMap().entrySet()) {
-            if (eat.isInstance(entry.getValue())) {
+            if (entity.isInstance(entry.getValue())) {
                 result.add(entry.getValue());
             }
         }
@@ -47,10 +47,10 @@ public abstract class Creature extends Entity {
         map.getMap().put(coordinates, this);
     }
 
-    public boolean findEat(GameMap map, Class<?> foodClass) { //проверяет соседние ячейки на наличие еды
+    public boolean isEatInNeighbors(GameMap map, Class<?> foodClass) { //проверяет соседние ячейки на наличие еды
         int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
         for (int[] pairOfCoord : array) {
-            if (Coordinates.validCoordinates(new Coordinates(pairOfCoord[0], pairOfCoord[1]), map) &&
+            if (Coordinates.isValidCoordinates(new Coordinates(pairOfCoord[0], pairOfCoord[1]), map) &&
                     foodClass.isInstance(map.getMap().get(new Coordinates(pairOfCoord[0], pairOfCoord[1])))) {
                 return true;
             }
@@ -58,11 +58,11 @@ public abstract class Creature extends Entity {
         return false;
     }
 
-    public void randomMove(GameMap map) {
+    public void makeRandomMove(GameMap map) {
         ArrayList<Coordinates> listOfFreeCoordinates = new ArrayList<>();
         int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
         for (int[] pairOfCoord : array) {
-            if (Coordinates.validCoordinates(new Coordinates(pairOfCoord[0], pairOfCoord[1]), map)
+            if (Coordinates.isValidCoordinates(new Coordinates(pairOfCoord[0], pairOfCoord[1]), map)
                     && map.isEmptyCeil(new Coordinates(pairOfCoord[0], pairOfCoord[1]))) {
                 listOfFreeCoordinates.add(new Coordinates(pairOfCoord[0], pairOfCoord[1]));
             }

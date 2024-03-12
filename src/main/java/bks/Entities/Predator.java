@@ -7,11 +7,8 @@ import java.util.ArrayList;
 
 public final class Predator extends Creature {
 
-    public static ArrayList<Predator> entities = new ArrayList<>(); //лист хищников
-
     public Predator(Coordinates coordinates) {
         super( coordinates);
-        entities.add(this);
     }
 
     @Override
@@ -20,12 +17,12 @@ public final class Predator extends Creature {
     }
 
     @Override
-    public void eat(GameMap map) {
+    public void eat(GameMap map) { // поедание пищи с соседней координаты
         int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
         for (int[] pairOfCoord : array) {
-            for (Herbivore herbivore : Herbivore.entities) {
+            ArrayList<Entity> listHerbivore = Creature.getListOfEntity(Herbivore.class, map);
+            for (Entity herbivore : listHerbivore) {
                 if (herbivore.getCoordinates().equals(new Coordinates(pairOfCoord[0], pairOfCoord[1]))) {
-                    Herbivore.entities.remove(herbivore);
                     map.makeEmptyCeil(new Coordinates(pairOfCoord[0], pairOfCoord[1]));
                     break;
                 }

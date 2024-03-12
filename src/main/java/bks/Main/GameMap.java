@@ -26,12 +26,12 @@ public class GameMap {
         return map;
     }
 
-    public boolean isEmptyCeil(Coordinates coordinates) {
-        return this.map.get(coordinates) == null; //проверка свободна ли ячейка
-    }
-
     public void makeEmptyCeil(Coordinates coordinates) {
         this.map.put(coordinates, null); //освобождает ячейку по заданным координатам
+    }
+
+    public boolean isEmptyCeil(Coordinates coordinates) {
+        return this.map.get(coordinates) == null; //проверка свободна ли ячейка
     }
 
     public boolean isEmptyCeil(Coordinates coordinates, Coordinates target) { //ещё одна вариация проверки свободной ячейки, применяемая в алгоритме поиска пути
