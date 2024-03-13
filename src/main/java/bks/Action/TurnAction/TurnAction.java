@@ -1,10 +1,8 @@
 package bks.Action.TurnAction;
 
 import bks.Action.Action;
-import bks.Main.Simulation;
-
-
+import bks.Main.GameMap;
 
 public abstract class TurnAction extends Action {
-    public abstract void makeTurnAction(Simulation simulation);
+    public abstract void makeTurnAction(GameMap map);
 }

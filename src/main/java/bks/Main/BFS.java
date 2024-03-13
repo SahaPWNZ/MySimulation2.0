@@ -17,7 +17,7 @@ public class BFS { //класс для реализации алгоритма �
         allPath = new HashMap<>();
     }
 
-    public Coordinates runBFS(Simulation simulation) { //метод для запуска поиска пути и возврата координаты первого шага к цели
+    public Coordinates runBFS(GameMap map) { //метод для запуска поиска пути и возврата координаты первого шага к цели
         queue.add(start);
         allPath.put(start, null);
         while (!queue.isEmpty()) {
@@ -32,7 +32,7 @@ public class BFS { //класс для реализации алгоритма �
                     }
                     return path.get(1);
                 }
-                for (Coordinates neighborCoord : getNeighborsBFS(simulation.getGameMap(), currentCoordinates)) {
+                for (Coordinates neighborCoord : getNeighborsBFS(map, currentCoordinates)) {
                     if (!queue.contains(neighborCoord) && !(allPath.containsKey(neighborCoord))) {
                         queue.add(neighborCoord);
                         allPath.put(neighborCoord, currentCoordinates);

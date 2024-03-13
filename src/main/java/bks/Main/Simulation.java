@@ -55,7 +55,7 @@ public class Simulation {
         turnAction.add(new SpawnAction());
         for (Action action : turnAction) {
             if (action instanceof TurnAction) {
-                ((TurnAction) action).makeTurnAction(this);
+                ((TurnAction) action).makeTurnAction(getGameMap());
             } else {
                 ((SpawnAction) action).makeAction(getGameMap());
             }

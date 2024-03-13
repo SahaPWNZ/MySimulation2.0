@@ -15,7 +15,7 @@ public abstract class Creature extends Entity {
     }
 
 
-    public abstract void eat(GameMap map); //поедание еды в соседней ячейке
+//    public abstract void eat(GameMap map); //поедание еды в соседней ячейке
 
     public Coordinates getCoordinatesOfClosestEat(GameMap map, ArrayList<Entity> listOfEat) { //поиск и выбор цели
         int selfVectorCoordinate = this.getCoordinates().col() + this.getCoordinates().row();
@@ -70,6 +70,14 @@ public abstract class Creature extends Entity {
                 map.makeEmptyCeil(this.coordinates);
                 this.coordinates = listOfFreeCoordinates.get(InitAction.random.nextInt(listOfFreeCoordinates.size()));
                 map.getMap().put(this.coordinates, this);
+            }
+        }
+    }
+    public void eat(GameMap map, Class<?> foodClass) {//поедание пищи с соседней координаты
+        int[][] array = coordinates.getArrayOfCoordinatesNeighbors();
+        for (int[] pairOfCoord : array) {
+            if (foodClass.isInstance(map.getMap().get(new Coordinates(pairOfCoord[0], pairOfCoord[1])))) {
+                map.makeEmptyCeil(new Coordinates(pairOfCoord[0], pairOfCoord[1]));
             }
         }
     }
