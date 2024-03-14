@@ -8,14 +8,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public abstract class Creature extends Entity {
-    public static ArrayList<? extends Creature> entities;
 
     Creature(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
-
-
-//    public abstract void eat(GameMap map); //поедание еды в соседней ячейке
 
     public Coordinates getCoordinatesOfClosestEat(GameMap map, ArrayList<Entity> listOfEat) { //поиск и выбор цели
         int selfVectorCoordinate = this.getCoordinates().col() + this.getCoordinates().row();
