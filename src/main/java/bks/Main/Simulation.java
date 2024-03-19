@@ -57,7 +57,7 @@ public class Simulation {
             if (action instanceof TurnAction) {
                 ((TurnAction) action).makeTurnAction(getGameMap());
             } else {
-                ((SpawnAction) action).makeAction(getGameMap());
+                ((SpawnAction) action).makeAction();
             }
         }
         addCountTurn();
@@ -70,7 +70,7 @@ public class Simulation {
         scan.nextLine();
         Simulation simulation = new Simulation(WIDTH, HEIGHT);
         InitSpawnAction initAction = new InitSpawnAction(simulation.getGameMap());
-        initAction.makeAction(simulation.getGameMap());
+        initAction.makeAction();
         simulation.renderMap();
         while (true) {
             System.out.println("Нажмите любую клавишу чтобы продолжить симуляцию, или 0 чтобы закончить. Текущий ход = " + simulation.getCountTurn());

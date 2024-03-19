@@ -64,7 +64,7 @@ public abstract class Creature extends Entity {
             }
             if (!listOfFreeCoordinates.isEmpty()) {
                 map.makeEmptyCeil(this.coordinates);
-                this.coordinates = listOfFreeCoordinates.get(InitAction.random.nextInt(listOfFreeCoordinates.size()));
+                this.coordinates = listOfFreeCoordinates.get(GameMap.random.nextInt(listOfFreeCoordinates.size()));
                 map.getMap().put(this.coordinates, this);
             }
         }
