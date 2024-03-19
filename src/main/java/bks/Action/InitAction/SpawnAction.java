@@ -6,6 +6,10 @@ import bks.Main.GameMap;
 
 public final class SpawnAction extends InitAction {
 
+    public SpawnAction(GameMap map) {
+        super(map);
+    }
+
     @Override
     public void makeAction(GameMap map) {
         checkAndSpawnGrass(map);
@@ -14,13 +18,13 @@ public final class SpawnAction extends InitAction {
 
     private void checkAndSpawnHerbivore(GameMap map) {
         if (Creature.getListOfEntity(Herbivore.class, map).size() <= 1) {
-            initHerbivore(map, Creature.getListOfEntity(Herbivore.class, map).size());
+
         }
     }
 
     private void checkAndSpawnGrass(GameMap map) {
         if (Creature.getListOfEntity(Grass.class, map).size() <= 1) {
-            initGrass(map, Creature.getListOfEntity(Grass.class, map).size());
+
         }
     }
 }

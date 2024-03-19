@@ -5,66 +5,41 @@ import bks.Entities.*;
 import bks.Main.Coordinates;
 import bks.Main.GameMap;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public abstract class InitAction extends Action {
-    private final static int HERBIVORE_COUNT = 4;
-    private final static int PREDATOR_COUNT = 2;
-    private final static int GRASS_COUNT = 5;
-    private final static int ROCK_COUNT = 2;
-    private final static int TREE_COUNT = 2;
+    GameMap map;
+
+    public InitAction(GameMap map) {
+        this.map = map;
+    }
     public static Random random = new Random();
+    protected final HashMap<Class<? extends Entity>, Integer> entityMap = new HashMap<>();
+
+    {
+        entityMap.put(Herbivore.class, 4);
+        entityMap.put(Predator.class, 2);
+        entityMap.put(Grass.class, 5);
+        entityMap.put(Rock.class, 2);
+        entityMap.put(Tree.class, 2);
+    }
 
     public abstract void makeAction(GameMap map);
 
-    protected void initHerbivore(GameMap map, int count) {
-        while (count < HERBIVORE_COUNT) {
-            Coordinates coordinates = new Coordinates(random.nextInt(map.getHEIGHT()), random.nextInt(map.getWIDTH()));
-            if (map.isEmptyCeil(coordinates)) {
-                map.getMap().put(coordinates, new Herbivore(coordinates));
-                count++;
+    protected void initEntity(Class<? extends Entity> entityClass, int countEntites) {
+        while (countEntites < entityMap.get(entityClass)) {
+            try {
+                Coordinates coordinates = new Coordinates(random.nextInt(map.getHEIGHT()), random.nextInt(map.getWIDTH()));
+                if (map.isEmptyCeil(coordinates)) {
+                    map.getMap().put(coordinates, entityClass.getConstructor(Coordinates.class).newInstance(coordinates));
+                    countEntites++;
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
-    protected void initPredator(GameMap map, int count) {
-        while (count < PREDATOR_COUNT) {
-            Coordinates coordinates = new Coordinates(random.nextInt(map.getHEIGHT()), random.nextInt(map.getWIDTH()));
-            if (map.isEmptyCeil(coordinates)) {
-                map.getMap().put(coordinates, new Predator(coordinates));
-                count++;
-            }
-        }
-    }
-
-    protected void initGrass(GameMap map, int count) {
-        while (count < GRASS_COUNT) {
-            Coordinates coordinates = new Coordinates(random.nextInt(map.getHEIGHT()), random.nextInt(map.getWIDTH()));
-            if (map.isEmptyCeil(coordinates)) {
-                map.getMap().put(coordinates, new Grass(coordinates));
-                count++;
-            }
-        }
-    }
-
-    protected void initRock(GameMap map, int count) {
-        while (count < ROCK_COUNT) {
-            Coordinates coordinates = new Coordinates(random.nextInt(map.getHEIGHT()), random.nextInt(map.getWIDTH()));
-            if (map.isEmptyCeil(coordinates)) {
-                map.getMap().put(coordinates, new Rock(coordinates));
-                count++;
-            }
-        }
-    }
-
-    protected void initTree(GameMap map, int count) {
-        while (count < TREE_COUNT) {
-            Coordinates coordinates = new Coordinates(random.nextInt(map.getHEIGHT()), random.nextInt(map.getWIDTH()));
-            if (map.isEmptyCeil(coordinates)) {
-                map.getMap().put(coordinates, new Tree(coordinates));
-                count++;
-            }
-        }
-    }
 
 }

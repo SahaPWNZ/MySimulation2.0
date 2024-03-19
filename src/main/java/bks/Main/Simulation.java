@@ -52,7 +52,7 @@ public class Simulation {
         ArrayList<Action> turnAction = new ArrayList<>();
         turnAction.add(new HerbivoreTurn());
         turnAction.add(new PredatorTurn());
-        turnAction.add(new SpawnAction());
+        turnAction.add(new SpawnAction(getGameMap()));
         for (Action action : turnAction) {
             if (action instanceof TurnAction) {
                 ((TurnAction) action).makeTurnAction(getGameMap());
@@ -69,7 +69,7 @@ public class Simulation {
         System.out.println("Нажмите любую клавишу чтобы начать симуляцию");
         scan.nextLine();
         Simulation simulation = new Simulation(WIDTH, HEIGHT);
-        InitSpawnAction initAction = new InitSpawnAction();
+        InitSpawnAction initAction = new InitSpawnAction(simulation.getGameMap());
         initAction.makeAction(simulation.getGameMap());
         simulation.renderMap();
         while (true) {
